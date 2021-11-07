@@ -1,23 +1,25 @@
 import React from 'react';
 import './App.css';
-import './Star';
-import Star from "./Star";
+import './components/Star';
+import Rating from './components/Rating';
+import Accordion from './components/Accordion';
+import PageTitle from "./components/AppTitle";
 
 function App() {
     return (
         <div className="App">
-            <h1>123</h1>
-            <Rating/>
+            <PageTitle title={"This is APP component"}/>
+            <Accordion titleValue={"Типа меню"}/>
+            <Rating value={123}/>
+            <Rating value={1}/>
+            <Rating value={2}/>
+            <Rating value={3}/>
+            <Rating value={4}/>
+            <Rating value={5}/>
         </div>
     );
 }
 
-function Rating() {
-    return (
-        <div>
-            <Star/>
-        </div>
-    )
-}
+
 
 export default App;
