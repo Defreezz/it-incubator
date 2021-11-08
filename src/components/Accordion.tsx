@@ -4,7 +4,7 @@ function Accordion(props: any) {
     return (
         <div>
             <AccordionTitle title={props.titleValue}/>
-            <AccordionBody/>
+            <AccordionBody collapsed={props.collapsed}/>
         </div>
     );
 }
@@ -15,14 +15,20 @@ function AccordionTitle(props: any) {
     )
 }
 
-function AccordionBody() {
-    return (
-        <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-        </ul>
-    )
+function AccordionBody(props: any) {
+    if (props.collapsed === true){
+        return (
+            <ul>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+            </ul>
+        )
+    }else{
+        return (
+            <></>
+        )
+    }
 }
 
 export default Accordion;
