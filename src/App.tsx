@@ -1,25 +1,22 @@
 import React from 'react';
 import './App.css';
-import './components/Star';
-import Rating from './components/Rating';
-import Accordion from './components/Accordion';
-import PageTitle from "./components/AppTitle";
+import Header from "./components/Header/Header";
+import Navbar from "./components/Navbar/Navbar";
+import Profile from "./components/Profile/Profile";
+import navbarClasses from "./components/Navbar/Navbar.module.css"
+import profileClasses from "./components/Profile/Profile.module.css"
+import headerClasses from "./components/Header/Header.module.css"
+
 
 function App() {
     return (
-        <div className="App">
-            <PageTitle title={"This is APP component"}/>
-            <Accordion titleValue={"Типа меню"}/>
-            <Rating value={123}/>
-            <Rating value={1}/>
-            <Rating value={2}/>
-            <Rating value={3}/>
-            <Rating value={4}/>
-            <Rating value={5}/>
+        <div className={"app-wrapper"}>
+            <Header className={headerClasses.header}/>
+            <Navbar className={navbarClasses.nav} item={`${navbarClasses.item} ${navbarClasses.active}`}/>
+            <Profile className={profileClasses.profile} item={profileClasses.item}/>
         </div>
     );
 }
-
 
 
 export default App;
