@@ -3,7 +3,6 @@ import postsClasses from "./Post/Post.module.css"
 
 
 type TypeClassName = {
-    //className: string
     item: string
 }
 
@@ -14,9 +13,9 @@ function MyPosts(props: TypeClassName) {
             <div>
                 new post
             </div>
-            <Post item={postsClasses.item}/>
-            <Post item={postsClasses.item}/>
-            <Post item={postsClasses.item}/>
+            <Post item={postsClasses.item} likesCount={23} message={"Здароу"}/>
+            <Post item={postsClasses.item} likesCount={2} message={"Чо каво"}/>
+            <Post item={postsClasses.item} likesCount={55} message={"123"}/>
         </div>
     )
 }
