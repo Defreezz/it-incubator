@@ -2,19 +2,25 @@ import React from "react";
 import MyPosts from "./MyPosts/MyPosts";
 import myPostsClasses from "./MyPosts/MyPosts.module.css"
 
-type TypeClassName = {
-    className: string
-    item: string
+type TypeOfProfileData = {
+    profileData: {
+        img1: string
+        img2: string
+    }
+}
+type x = {
+    styleProfile: TypeOfProfileData
 }
 
-function Profile(props: TypeClassName) {
+
+function Profile(props: x) {
     return (
-        <div className={props.className}>
+        <div>
             <div>
-                <img src={"https://img.uslugio.com/img3/33/3d/333d332bafec42151557d5c1a8a2d10c.jpg"}></img>
+                <img src={props.styleProfile.profileData.img1}></img>
             </div>
             <div>
-                <img src={"https://s.mediasole.ru/cache/content/data/images/1486/1486067/original.jpg"}></img>
+                <img src={props.styleProfile.profileData.img2}></img>
                 ava
             </div>
             <MyPosts item={myPostsClasses.item}/>

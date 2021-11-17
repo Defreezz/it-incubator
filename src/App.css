@@ -7,6 +7,11 @@
     grid-template-columns: 2fr 10fr;
 }
 
+.app-wrapper-content {
+    grid-area: p;
+    background-color: grey;
+    width: 100%;
+}
 
 
 

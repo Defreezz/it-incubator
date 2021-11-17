@@ -1,27 +1,33 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
-type TypeClassName = {
-    className: string
-    item: string
+type TypeOfNavbarProps = {
+    navbar: string
+    navbarItem: string
+    activeItem: string
 }
 
-function Navbar(props: TypeClassName) {
+type X = {
+    styleNavbar: TypeOfNavbarProps
+}
+
+function Navbar(props: X) {
     return (
-        <nav className={props.className}>
-            <div className={props.item}>
-                <a>Profile</a>
+        <nav className={props.styleNavbar.navbar}>
+            <div className={`${props.styleNavbar.navbarItem} ${props.styleNavbar.activeItem}`}>
+                <NavLink to="/profile">Profile</NavLink>
             </div>
-            <div className={props.item}>
-                <a>Messages</a>
+            <div className={props.styleNavbar.navbarItem}>
+                <NavLink to="/dialogs">Messages</NavLink>
             </div>
-            <div className={props.item}>
-                <a>News</a>
+            <div className={props.styleNavbar.navbarItem}>
+                <NavLink to="">News</NavLink>
             </div>
-            <div className={props.item}>
-                <a>Music</a>
+            <div className={props.styleNavbar.navbarItem}>
+                <NavLink to="">Music</NavLink>
             </div>
-            <div className={props.item}>
-                <a>Settings</a>
+            <div className={props.styleNavbar.navbarItem}>
+                <NavLink to="">Settings</NavLink>
             </div>
         </nav>
     )

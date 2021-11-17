@@ -8,7 +8,7 @@ type TypeClassName = {
 
 function MyPosts(props: TypeClassName) {
     return (
-        <div>
+        <div className={props.item}>
             my post
             <div>
                 new post

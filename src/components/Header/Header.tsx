@@ -3,14 +3,21 @@ import React from "react";
 
 type TypeClassName = {
     className: string
+    headerData: {
+        img1: string
+    }
+}
+
+type X = {
+    styleHeader: TypeClassName
 }
 
 
-function Header(props: TypeClassName) {
+function Header(props: X) {
     return (
-        <header className={props.className}>
+        <header className={props.styleHeader.className}>
             <img
-                src={'https://www.rulez-t.info/uploads/posts/2017-10/1508283588_rulez-t_info-memy-dlya-ochen-vazhnyh-peregovorov-0.png'}>
+                src={props.styleHeader.headerData.img1}>
             </img>
         </header>
     )
