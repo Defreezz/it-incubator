@@ -3,23 +3,24 @@ import React from "react";
 
 type TypeClassName = {
     className: string
+    logo: string
     headerData: {
         img1: string
     }
 }
 
-type X = {
+type X = {//типизация объекта, который приходит в пропсах из APP
     styleHeader: TypeClassName
 }
 
 
 function Header(props: X) {
     return (
-        <header className={props.styleHeader.className}>
-            <img
-                src={props.styleHeader.headerData.img1}>
-            </img>
-        </header>
+        <div className={props.styleHeader.className}>
+            <div className={props.styleHeader.logo}>
+                <img src={props.styleHeader.headerData.img1}></img>
+            </div>
+        </div>
     )
 }
 

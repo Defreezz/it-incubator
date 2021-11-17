@@ -10,7 +10,11 @@
 .app-wrapper-content {
     grid-area: p;
     background-color: grey;
+    padding: 20px 10px 10px 20px;
+    margin: 5px;
+    border-radius: 10px;
     width: 100%;
+    min-height: 1124px;
 }
 
 
