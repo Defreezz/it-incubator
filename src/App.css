@@ -9,12 +9,12 @@
 
 .app-wrapper-content {
     grid-area: p;
-    background-color: grey;
+    background-color: rgba(51, 51,51, 0.9);
     padding: 20px 10px 10px 20px;
     margin: 5px;
     border-radius: 10px;
-    width: 100%;
     min-height: 1124px;
+    min-width: 500px;
 }
 
 

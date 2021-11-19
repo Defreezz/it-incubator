@@ -5,6 +5,7 @@ type TypeClassName = {
     item: string
     likesCount: number
     message: string
+    id: number
 }
 
 const avaData = {
@@ -13,7 +14,7 @@ const avaData = {
 
 function Post(props: TypeClassName) {
     return (
-        <div className={props.item}>
+        <div  className={props.item}>
             <img
                 src={avaData.img1}></img>
             <span>{props.message}</span>

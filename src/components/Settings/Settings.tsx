@@ -2,7 +2,7 @@ type TypeClassName = {
 
 }
 
-function Settings(props: any) {
+function Settings(props: TypeClassName) {
     return (
         <div>Settings</div>
     )

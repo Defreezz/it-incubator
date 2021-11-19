@@ -1,21 +1,26 @@
 import Post from "./Post/Post";
-import postsClasses from "./Post/Post.module.css"
+import style from "./Post/Post.module.css"
+import {state} from "../../Dialogs/Dialogs";
 
 
-type TypeClassName = {
-    item: string
-}
 
-function MyPosts(props: TypeClassName) {
+
+const postsElement = state.profilePage.posts.map(p => <Post item={style.item} id={p.id} likesCount={p.likeCount} message={p.message}/>)
+
+function MyPosts() {
     return (
-        <div className={props.item}>
-            my post
+        <div className={style.item}>
+            <h3>my post</h3>
+            <div>
+                <textarea></textarea>
+            </div>
+            <div>
+                <button>Add post</button>
+            </div>
             <div>
                 new post
             </div>
-            <Post item={postsClasses.item} likesCount={23} message={"Здароу"}/>
-            <Post item={postsClasses.item} likesCount={2} message={"Чо каво"}/>
-            <Post item={postsClasses.item} likesCount={55} message={"123"}/>
+            {postsElement}
         </div>
     )
 }

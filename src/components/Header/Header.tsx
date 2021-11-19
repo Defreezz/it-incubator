@@ -1,24 +1,15 @@
 import React from "react";
+import h from "./Header.module.css"
+
+const headerData = 'https://www.rulez-t.info/uploads/posts/2017-10/1508283588_rulez-t_info-memy-dlya-ochen-vazhnyh-peregovorov-0.png'
 
 
-type TypeClassName = {
-    className: string
-    logo: string
-    headerData: {
-        img1: string
-    }
-}
 
-type X = {//типизация объекта, который приходит в пропсах из APP
-    styleHeader: TypeClassName
-}
-
-
-function Header(props: X) {
+function Header() {
     return (
-        <div className={props.styleHeader.className}>
-            <div className={props.styleHeader.logo}>
-                <img src={props.styleHeader.headerData.img1}></img>
+        <div className={h.header}>
+            <div className={h.logo}>
+                <img src={headerData}></img>
             </div>
         </div>
     )

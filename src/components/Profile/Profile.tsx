@@ -1,6 +1,7 @@
 import React from "react";
 import MyPosts from "./MyPosts/MyPosts";
-import myPostsClasses from "./MyPosts/MyPosts.module.css"
+
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
 
 // type TypeOfProfileData = { //типизация того, что вложено в объект
 //     profileData: {
@@ -21,14 +22,8 @@ type x = { //типизация объекта, который приходит 
 function Profile(props: x) {
     return (
         <div>
-            <div>
-                <img src={props.styleProfile.profileData.img1}></img>
-            </div>
-            <div>
-                <img src={props.styleProfile.profileData.img2}></img>
-                ava
-            </div>
-            <MyPosts item={myPostsClasses.item}/>
+            <ProfileInfo img={props.styleProfile.profileData}/>
+            <MyPosts />
         </div>
     )
 }
