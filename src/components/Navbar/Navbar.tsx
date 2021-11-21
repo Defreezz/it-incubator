@@ -8,19 +8,25 @@ const navbarItemData = [
     {name: "News", path: "/news"},
     {name: "Music", path: "/music"},
     {name: "Settings", path: "/settings"}
-
 ]
-const navbarItem = navbarItemData.map(n =>
+type NavbarItemType = {
+    linkTO: string
+    names: string
+}
+function NavbarItem (props:NavbarItemType){
+    let path = `${props.linkTO}` //{{pathname: props.linkTO}} 2ой вариант, записывается в комоненту <NavLink/> в to. to={{pathname: props.linkTO}}
+    return(
     <div className={style.item}>
         {/*navData проверяет есть ли class active  у блока*/}
-        <NavLink to={{pathname: n.path}} className={(navData) => navData.isActive ? style.activeLink : ''}>{n.name}</NavLink>
-    </div>)
+        <NavLink to={path} className={(navData) => navData.isActive ? style.activeLink : ''}>{props.names}</NavLink>
+    </div>)}
 
+const navbarElement = navbarItemData.map(n => <NavbarItem linkTO={n.path} names={n.name}/>)
 
 function Navbar() {
     return (
         <nav className={style.nav}>
-            {navbarItem}
+            {navbarElement}
         </nav>
     )
 }

@@ -1,13 +1,17 @@
 import Post from "./Post/Post";
 import style from "./Post/Post.module.css"
-import {state} from "../../Dialogs/Dialogs";
+import {PostType} from "../../../redux/state";
+
+
+type PostsType = {
+    posts:Array<PostType>
+}
 
 
 
 
-const postsElement = state.profilePage.posts.map(p => <Post item={style.item} id={p.id} likesCount={p.likeCount} message={p.message}/>)
-
-function MyPosts() {
+function MyPosts(props:PostsType) {
+    const postsElement = props.posts.map(p => <Post id={p.id} likeCount={p.likeCount} message={p.message}/>)
     return (
         <div className={style.item}>
             <h3>my post</h3>
