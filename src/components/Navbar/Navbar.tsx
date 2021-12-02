@@ -1,27 +1,38 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
 import style from "./Navbar.module.css"
+import {v1} from "uuid";
 
 const navbarItemData = [
-    {name: "Profile", path: "/profile"},
-    {name: "Messages", path: "/dialogs"},
-    {name: "News", path: "/news"},
-    {name: "Music", path: "/music"},
-    {name: "Settings", path: "/settings"}
+    {id:v1(), name: "Profile", path: "/profile"},
+    {id:v1(),name: "Messages", path: "/dialogs"},
+    {id:v1(),name: "News", path: "/news"},
+    {id:v1(),name: "Music", path: "/music"},
+    {id:v1(),name: "Settings", path: "/settings"},
+   // {id:v1(),name: "Sidebar", path: "/sidebar"},
 ]
 type NavbarItemType = {
     linkTO: string
     names: string
 }
+
+
+const navbarElement = navbarItemData.map(n =>
+    <NavbarItem linkTO={n.path} names={n.name}/>)
+
 function NavbarItem (props:NavbarItemType){
-    let path = `${props.linkTO}` //{{pathname: props.linkTO}} 2ой вариант, записывается в комоненту <NavLink/> в to. to={{pathname: props.linkTO}}
+    let path = props.linkTO
     return(
     <div className={style.item}>
         {/*navData проверяет есть ли class active  у блока*/}
-        <NavLink to={path} className={(navData) => navData.isActive ? style.activeLink : ''}>{props.names}</NavLink>
+        <NavLink
+            to={path}
+            className={(navData) => navData.isActive ? style.activeLink : ''}>
+            {props.names}
+        </NavLink>
     </div>)}
 
-const navbarElement = navbarItemData.map(n => <NavbarItem linkTO={n.path} names={n.name}/>)
+
 
 function Navbar() {
     return (

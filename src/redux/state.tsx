@@ -1,16 +1,21 @@
+import {v1} from "uuid";
+import {truncate} from "fs";
+import React, {useState} from "react";
+import {rerenderEntireTree} from "../render";
+
 export type PostType = {
-    id: number,
+    id: string,
     message: string,
     likeCount: number
 }
 
 export type DialogType = {
-    id: number,
+    id: string,
     name: string
 }
 
 export type MessageType = {
-    id: number,
+    id: string,
     message: string
 }
 
@@ -25,36 +30,53 @@ export type DialogsPageType = {
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
-    // sidebar: {}
+    sidebar: {}
 
 }
-let state: RootStateType = {
+export type StateType = {
+    state: RootStateType,
+    addPost: (postText:string) => void
+}
+export let state: RootStateType = {
     profilePage: {
         posts: [
-            {id: 1, message: "jeeeeeeeeeronimo", likeCount: 12},
-            {id: 2, message: "Assssssssss", likeCount: 1},
-            {id: 3, message: "QWErty", likeCount: 22},
-            {id: 4, message: "asd", likeCount: 3},
+            {id: v1(), message: "jeeeeeeeeeronimo", likeCount: 12},
+            {id: v1(), message: "Assssssssss", likeCount: 1},
+            {id: v1(), message: "QWErty", likeCount: 22},
+            {id: v1(), message: "asd", likeCount: 3},
         ]
     },
     dialogsPage: {
         dialogs: [
-            {id: 1, name: "Ира"},
-            {id: 2, name: "Света"},
-            {id: 3, name: "Катя"},
-            {id: 4, name: "Маша"}
+            {id: v1(), name: "Ира"},
+            {id: v1(), name: "Света"},
+            {id: v1(), name: "Катя"},
+            {id: v1(), name: "Маша"}
         ],
         messages: [
-            {id: 1, message: "4o kavo su4ki"},
-            {id: 2, message: "ыыыыыыыыыыыыыы"},
-            {id: 3, message: "пивет"},
-            {id: 4, message: "4o "},
+            {id: v1(), message: "4o kavo su4ki"},
+            {id: v1(), message: "ыыыыыыыыыыыыыы"},
+            {id: v1(), message: "пивет"},
+            {id: v1(), message: "4o "},
         ]
 
     },
-    //sidebar: {}
+    sidebar: {}
 
 
 }
 
-export default state
+
+
+export const addPost = (postText:string) =>{
+    const newText:PostType = {
+        id: v1(),
+        message:postText,
+        likeCount: 0
+    }
+    debugger
+    state.profilePage.posts.unshift(newText)
+    rerenderEntireTree(state)
+
+}
+
