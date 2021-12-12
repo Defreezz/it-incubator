@@ -9,11 +9,16 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/SideBar/Sidebar";
-import {StateType} from "./redux/state";
+import {StoreType} from "./redux/state";
+
+type AppType = {
+    store: StoreType
+    //addPost: (newText: string) => void
+}
 
 
-
-function App(props: StateType) {
+function App(props: AppType) {
+    const state = props.store.getState()
     return (
         <div className={"app-wrapper"}>
             <Header/>
@@ -23,15 +28,16 @@ function App(props: StateType) {
                     <Route
                         path='/profile'
                         element={
-                             <Profile
-                        profilePage={props.state.profilePage}
-                        addPost={props.addPost}
+                            <Profile
+                                profilePage={state.profilePage}
+                                addPost={props.store.addPost.bind(props.store)}
+                                inputChange={props.store.inputChange.bind(props.store)}
                             />}/>
-                    <Route path='/dialogs' element={<Dialogs dialogsPage={props.state.dialogsPage}/>}/>
+                    <Route path='/dialogs' element={<Dialogs dialogsPage={state.dialogsPage}/>}/>
                     <Route path='/news' element={<News/>}/>
-                    <Route path='/music'  element={<Music/>}/>
+                    <Route path='/music' element={<Music/>}/>
                     <Route path='/settings' element={<Settings/>}/>
-                    <Route path='/sidebar' element={<Sidebar sidebar={props.state.sidebar}/>}/>
+                    <Route path='/sidebar' element={<Sidebar sidebar={state.sidebar}/>}/>
                 </Routes>
             </div>
 

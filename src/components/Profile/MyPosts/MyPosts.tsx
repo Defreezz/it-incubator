@@ -1,32 +1,39 @@
 import Post from "./Post/Post";
 import style from "./Post/Post.module.css"
 import {PostType} from "../../../redux/state";
-import React from "react";
+import React, {ChangeEvent, ChangeEventHandler} from "react";
 
 
 type PostsType = {
     posts:Array<PostType>
-    AddPost: (postText:string) => void
+    AddPost: () => void
+    InputChange:(inputText:string) => void
+    newInputText:string;
 }
 
-function MyPosts({posts, AddPost}:PostsType) {
+function MyPosts({posts, AddPost, newInputText,InputChange}:PostsType) {
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
     const addPostCallback = () => {
+        debugger
         if(newPostElement.current)
-           AddPost(newPostElement.current.value)
+           AddPost()
         if(newPostElement.current)
-            newPostElement.current.value = "";
+            InputChange("")
     }
     const post = (p:PostType) => <Post id={p.id} likeCount={p.likeCount} message={p.message}/>
     const postsElement = posts.map(p => post(p))
 
+    const inputTextChange  = () => {
+        if(newPostElement.current)
+            InputChange(newPostElement.current.value)
+    }
     //JSX
     return (
         <div className={style.item}>
             <h3>my post</h3>
             <div>
-                <textarea ref={newPostElement} ></textarea>
+                <textarea onChange={inputTextChange} ref={newPostElement} value={newInputText} ></textarea>
             </div>
             <div>
                 <button onClick={addPostCallback}>Add post</button>

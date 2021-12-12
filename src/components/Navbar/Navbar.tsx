@@ -17,11 +17,9 @@ type NavbarItemType = {
 }
 
 
-const navbarElement = navbarItemData.map(n =>
-    <NavbarItem linkTO={n.path} names={n.name}/>)
-
 function NavbarItem (props:NavbarItemType){
     let path = props.linkTO
+
     return(
     <div className={style.item}>
         {/*navData проверяет есть ли class active  у блока*/}
@@ -32,7 +30,8 @@ function NavbarItem (props:NavbarItemType){
         </NavLink>
     </div>)}
 
-
+const navbarElement = navbarItemData.map(n =>
+    <NavbarItem linkTO={n.path} names={n.name}/>)
 
 function Navbar() {
     return (
