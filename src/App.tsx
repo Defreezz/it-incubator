@@ -30,8 +30,8 @@ function App(props: AppType) {
                         element={
                             <Profile
                                 profilePage={state.profilePage}
-                                addPost={props.store.addPost.bind(props.store)}
-                                inputChange={props.store.inputChange.bind(props.store)}
+                                dispatch={props.store.dispatch.bind(props.store)}
+
                             />}/>
                     <Route path='/dialogs' element={<Dialogs dialogsPage={state.dialogsPage}/>}/>
                     <Route path='/news' element={<News/>}/>

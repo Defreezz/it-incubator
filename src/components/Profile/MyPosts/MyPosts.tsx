@@ -1,32 +1,31 @@
 import Post from "./Post/Post";
 import style from "./Post/Post.module.css"
-import {PostType} from "../../../redux/state";
+import {ALLActionTypes, PostType} from "../../../redux/state";
 import React, {ChangeEvent, ChangeEventHandler} from "react";
 
 
 type PostsType = {
     posts:Array<PostType>
-    AddPost: () => void
-    InputChange:(inputText:string) => void
+    dispatch: (action:ALLActionTypes) => void
     newInputText:string;
 }
 
-function MyPosts({posts, AddPost, newInputText,InputChange}:PostsType) {
+function MyPosts({posts, dispatch, newInputText}:PostsType) {
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
     const addPostCallback = () => {
         debugger
         if(newPostElement.current)
-           AddPost()
+          dispatch({type:"ADD-POST"})
         if(newPostElement.current)
-            InputChange("")
+            dispatch({type: "INPUT-CHANGE", inputText:""})
     }
     const post = (p:PostType) => <Post id={p.id} likeCount={p.likeCount} message={p.message}/>
     const postsElement = posts.map(p => post(p))
 
     const inputTextChange  = () => {
         if(newPostElement.current)
-            InputChange(newPostElement.current.value)
+            dispatch({type:"INPUT-CHANGE", inputText:newPostElement.current.value})
     }
     //JSX
     return (
