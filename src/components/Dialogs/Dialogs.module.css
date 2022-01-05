@@ -9,7 +9,7 @@
 }
 
 .dialog {
-
+    text-decoration: none;
 }
 .dialog .active {
     color: yellow;

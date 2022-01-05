@@ -1,55 +1,56 @@
 import {v1} from "uuid";
-import React from "react";
+import {profileReducer} from "./profileReducer";
+import {dialogsReducer} from "./dialogsReducer";
 
 
-export type PostType = {
+
+
+
+type PostType = {
     id: string,
     message: string,
     likeCount: number
 }
-export type DialogType = {
+type DialogType = {
     id: string,
     name: string
 }
-export type MessageType = {
+ type MessageType = {
     id: string,
     message: string
 }
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: Array<PostType>
-    newInputText:string
+    newInputPostText:string
 }
-export type DialogsPageType = {
+ type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
+    newInputMessageText:string
+
 }
-export type RootStateType = {
+type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: {}
 
 }
+
 // рут типизация стора
-export type StoreType = {
+ type StoreType = {
     _state: RootStateType,
     _callSubscriber:() => void
     subscribe:(callback:()=>void)=>void
     getState: () => RootStateType
     dispatch: (action:ALLActionTypes) => void
 }
-//типизация action dispatch
-type AddPostActionType = {
-    type:"ADD-POST"
-}
-type InputChangeType = {
-    type: "INPUT-CHANGE"
-    inputText:string
-}
-export type ALLActionTypes = AddPostActionType | InputChangeType
 
 
 
-export const store:StoreType = {
+
+
+
+ const store:StoreType = {
     _state:  {
         profilePage: {
             posts: [
@@ -58,7 +59,8 @@ export const store:StoreType = {
                 {id: v1(), message: "QWErty", likeCount: 22},
                 {id: v1(), message: "asd", likeCount: 3},
             ],
-            newInputText:""
+            newInputPostText:"",
+
         },
         dialogsPage: {
             dialogs: [
@@ -72,7 +74,8 @@ export const store:StoreType = {
                 {id: v1(), message: "ыыыыыыыыыыыыыы"},
                 {id: v1(), message: "пивет"},
                 {id: v1(), message: "4o "},
-            ]
+            ],
+            newInputMessageText:""
 
         },
         sidebar: {}
@@ -82,46 +85,27 @@ export const store:StoreType = {
     _callSubscriber () {
         console.log("hello")
     },
-    //так же удалены из типизации стора
-    // addPost () {
-    //     const newText:PostType = {
-    //         id: v1(),
-    //         message:this._state.profilePage.newInputText,
-    //         likeCount: 0
-    //     }
-    //     debugger
-    //     this._state.profilePage.posts.unshift(newText)
-    //     this._callSubscriber()
-    // },
-    // inputChange(inputText:string){
-    //     this._state.profilePage.newInputText = inputText
-    //     this._callSubscriber()
-    // },
     getState () {
-        debugger
         return this._state
     },
     subscribe (callback) {
       this._callSubscriber = callback
     },
-    dispatch (action:ALLActionTypes){
-        if(action.type === "ADD-POST"){
-            const newText:PostType = {
-                id: v1(),
-                message:this._state.profilePage.newInputText,
-                likeCount: 0
-            }
-            this._state.profilePage.posts.unshift(newText)
-            this._callSubscriber()
-        }else if(action.type === "INPUT-CHANGE"){
-            this._state.profilePage.newInputText = action.inputText
-            this._callSubscriber()
-        }
-
+    dispatch (action){
+        profileReducer(this._state.profilePage,action)
+        dialogsReducer(this._state.dialogsPage,action)
+        this._callSubscriber()
     }
 
 }
 
+//типизация action dispatch
+type ALLActionTypes =
+    {
+    type:any
+    inputPostText?:string
+    inputMessageText?:string
+}
 
 
 

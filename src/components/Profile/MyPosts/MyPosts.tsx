@@ -1,41 +1,33 @@
 import Post from "./Post/Post";
 import style from "./Post/Post.module.css"
-import {ALLActionTypes, PostType} from "../../../redux/state";
-import React, {ChangeEvent, ChangeEventHandler} from "react";
+import React from "react";
+import {MyPostsComponentType} from "./MyPostsContainer";
 
 
-type PostsType = {
-    posts:Array<PostType>
-    dispatch: (action:ALLActionTypes) => void
-    newInputText:string;
-}
 
-function MyPosts({posts, dispatch, newInputText}:PostsType) {
+
+function MyPosts({posts,  newInputText,onChange,onClick}:MyPostsComponentType) {
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
-    const addPostCallback = () => {
-        debugger
-        if(newPostElement.current)
-          dispatch({type:"ADD-POST"})
-        if(newPostElement.current)
-            dispatch({type: "INPUT-CHANGE", inputText:""})
-    }
-    const post = (p:PostType) => <Post id={p.id} likeCount={p.likeCount} message={p.message}/>
+    const post = (p:any) => <Post id={p.id} likeCount={p.likeCount} message={p.message}/>
     const postsElement = posts.map(p => post(p))
 
-    const inputTextChange  = () => {
-        if(newPostElement.current)
-            dispatch({type:"INPUT-CHANGE", inputText:newPostElement.current.value})
-    }
+    const onInputTextChange = () => newPostElement.current && onChange(newPostElement.current.value)
+    const onAddPost = () => newPostElement.current && onClick(newPostElement.current.value)
+
     //JSX
     return (
         <div className={style.item}>
             <h3>my post</h3>
             <div>
-                <textarea onChange={inputTextChange} ref={newPostElement} value={newInputText} ></textarea>
+                <textarea
+                    onChange={onInputTextChange}
+                    ref={newPostElement}
+                    value={newInputText}
+                > </textarea>
             </div>
             <div>
-                <button onClick={addPostCallback}>Add post</button>
+                <button onClick={onAddPost}>Add post</button>
             </div>
             <div>
                 new post

@@ -1,6 +1,4 @@
-type TypeClassName = {
 
-}
 
 function News(props: any) {
     return (
