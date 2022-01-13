@@ -1,21 +1,50 @@
+import {connect} from "react-redux";
+import {InitialStateType, setUserProfile} from "../../redux/profileReducer";
+import {AppStateType} from "../../redux/reduxStore";
+import {ProfileClassComponent} from "./ProfileClassComponent";
 import React from "react";
-import Profile from "./Profile";
-import axios from "axios";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 
 
-export class ProfileContainer extends React.Component<any, any> {
-    componentDidMount() {
-        axios.get(`/profile/2`)
-            .then(response => {
-                this.props.setThrobberFetching(false)
-                this.props.setUsers(response.data.items)
-                this.props.setTotalItemUsersCount(response.data.totalCount)
-            })
+export type MapDispatchToProps = {
+    setUserProfile:(profile: any) => void
+}
+
+type RouterType = {
+    router:{
+        params:{userID:string}
+        navigate:any
+        location:any
     }
+}
 
-    render() {
+export type ProfileComponentType = InitialStateType & MapDispatchToProps & RouterType
+
+
+const mapStateToProps = (state: any): any => {
+    return {
+        profile: state.profilePage.profile,
+        newInputPostText: state.profilePage.newInputPostText,
+        posts:state.profilePage.posts,
+    }
+}
+
+
+export function withRouter (Component:typeof React.Component) {
+    return (props: object) => {
+        let params = useParams();
+        let navigate = useNavigate()
+        let location = useLocation()
+        debugger
         return (
-            <Profile {...this.props}/>
+            <Component {...props} router={{params, navigate, location}}/>
         )
     }
 }
+const ProfileContainerURL = withRouter(ProfileClassComponent)
+
+const ProfileContainer = connect(mapStateToProps, {
+    setUserProfile,
+})(ProfileContainerURL)
+
+export default ProfileContainer

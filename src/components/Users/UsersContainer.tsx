@@ -9,7 +9,6 @@ import {
     setTotalItemUsersCount, setThrobberFetching
 } from "../../redux/usersReducer"
 import {connect} from "react-redux";
-
 import {UsersClassComponent} from "./UsersClassComponent";
 
 

@@ -1,6 +1,5 @@
 import {v1} from "uuid";
-import {profileReducer} from "./profileReducer";
-import {dialogsReducer} from "./dialogsReducer";
+
 
 
 
@@ -92,8 +91,8 @@ type RootStateType = {
       this._callSubscriber = callback
     },
     dispatch (action){
-        profileReducer(this._state.profilePage,action)
-        dialogsReducer(this._state.dialogsPage,action)
+        //profileReducer(this._state.profilePage,action)
+       // dialogsReducer(this._state.dialogsPage,action)
         this._callSubscriber()
     }
 

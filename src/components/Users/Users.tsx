@@ -46,7 +46,7 @@ export function Users({
                 <div key={u.id}>
             <span>
                   <div>
-                      <NavLink to={"/profile"}>
+                      <NavLink to={`/profile/`+ u.id }>
                           <img alt={""} src={u.photos.small ? u.photos.small : urlImg}/>
                       </NavLink>
                   </div>

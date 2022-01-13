@@ -7,6 +7,7 @@ import {Preloader} from "../common/preloader/preloader";
 
 export class UsersClassComponent extends React.Component<UsersComponentType> {
     componentDidMount() {
+
         this.props.setThrobberFetching(true)
         if (!this.props.users.length) {
             axios.get(`/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
