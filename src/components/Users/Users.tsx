@@ -1,38 +1,63 @@
+import s from "./Users.module.css";
 import React from "react";
-import {UsersComponentType} from "./UsersContainer";
-import s from "./Users.module.css"
-import axios from "axios";
+import {UserType} from "../../redux/usersReducer";
+import {createPaginator} from "../../utilits/paginator";
+import {NavLink} from "react-router-dom";
 
-export function Users({users, setUsers, toggleFollow}: UsersComponentType) {
+type UsersType = {
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    users: UserType[]
+    onPageChanged: (p: number) => void
+    toggleFollow: (id: string) => void
+
+
+}
+
+export function Users({
+                          currentPage,
+                          totalUsersCount,
+                          pageSize,
+                          users,
+                          onPageChanged,
+                          toggleFollow,
+                      }: UsersType) {
     const urlImg = "https://pbs.twimg.com/profile_images/378800000509207351/48400919aaca1bc39b8f691c7662c894.jpeg"
+    let pagesCount = Math.ceil(totalUsersCount / pageSize)
+    let pages: number[] = []
 
-    if(!users.length){//БУДЕТ ФИКСИТьСЯ классовой компонентой
-        //иди в UsersClassComponent
-
-        // setUsers([
-        //     {id:v1(),photoUrl:urlImg, followed:false, fullName:"Artiom",status:"asd",location:{city:"Minsk", country:"Belarus"}},
-        //     {id:v1(),photoUrl:urlImg, followed:true, fullName:"Alex",status:"kek",location:{city:"Moscow", country:"Russia"}},
-        //     {id:v1(),photoUrl:urlImg, followed:false, fullName:"Svea",status:"asd",location:{city:"Minsk", country:"Belarus"}}
-        // ])
-        axios.get(`/users`)
-            .then(response => {
-                setUsers(response.data.items)
-            })
-    }
-
-        const toggleFollowCallback = (id: string) => toggleFollow(id)
-        const userPageElement = users.map(u =>
-            <div key={u.id}>
+    pages.push(1)
+    createPaginator(pages, pagesCount, currentPage)
+    pages.push(pagesCount)
+    // for (let i = 1; i<=pagesCount;i++){
+    //     pages.push(i)
+    // }
+    return (
+        <div className={s.item}>
+            <div className={s.pages}>
+                {pages.map((p, index) =>
+                    <span key={index}
+                          onClick={() => onPageChanged(p)}
+                          className={(currentPage === p ? s.selectedPage : s.paginationPage)
+                          }>{p} </span>)}
+            </div>
+            {users.map(u =>
+                <div key={u.id}>
             <span>
-                  <div><img src={u.photos.small?u.photos.small:urlImg}/></div>
+                  <div>
+                      <NavLink to={"/profile"}>
+                          <img alt={""} src={u.photos.small ? u.photos.small : urlImg}/>
+                      </NavLink>
+                  </div>
                   <div>
                       <button
-                          onClick={() => toggleFollowCallback(u.id)}>
-                          {u.followed?"Unfollow":"Follow"}
+                          onClick={() => toggleFollow(u.id)}>
+                          {u.isFollowed ? "Unfollow" : "Follow"}
                       </button>
                   </div>
             </span>
-                <span>
+                    <span>
                 <span>
                     <div>{u.name}</div>
                     <div>{u.status}</div>
@@ -42,12 +67,7 @@ export function Users({users, setUsers, toggleFollow}: UsersComponentType) {
                     {/*<div>{u.location.country}</div>*/}
                 </span>
             </span>
-            </div>)
-
-    return (
-        <div className={s.item}>
-            {userPageElement}
+                </div>)}
         </div>
     )
-
 }

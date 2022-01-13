@@ -11,6 +11,7 @@ function Profile(props: any) {
         img2: "https://s.mediasole.ru/cache/content/data/images/1486/1486067/original.jpg"
     }
     return (
+
         <div>
             <ProfileInfo img={profileInfoData}/>
             <MyPostsContainer/>

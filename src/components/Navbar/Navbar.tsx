@@ -35,8 +35,8 @@ function NavbarItem (props:NavbarItemType){
         </NavLink>
     </div>)}
 
-const navbarElement = navbarItemData.map(n =>
-    <NavbarItem linkTO={n.path} names={n.name}/>)
+const navbarElement = navbarItemData.map((n,index) =>
+    <NavbarItem key={index} linkTO={n.path} names={n.name}/>)
 
 function Navbar() {
     return (

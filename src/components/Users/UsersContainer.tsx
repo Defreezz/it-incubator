@@ -1,33 +1,49 @@
 import {AppStateType} from "../../redux/reduxStore";
 
-import {toggleFollowAC, setUsersAC, UserType} from "../../redux/usersReducer"
+import {
+    toggleFollow,
+    setUsers,
+    UserType,
+    InitialStateType,
+    setCurrentPage,
+    setTotalItemUsersCount, setThrobberFetching
+} from "../../redux/usersReducer"
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
+
 import {UsersClassComponent} from "./UsersClassComponent";
 
 
 
-type MapStateToProps = {
-    users:UserType[]
-}
+
 type MapDispatchToProps = {
     toggleFollow:(userID:string) => void
     setUsers:(users:UserType[]) => void
-}
-export type UsersComponentType = MapStateToProps & MapDispatchToProps
+    setCurrentPage:(currentPage:number)=>void
+    setTotalItemUsersCount:(usersCount:number)=>void
+    setThrobberFetching:(isFetching:boolean)=>void
 
-const mapStateToProps = (state:AppStateType):MapStateToProps => {
+}
+export type UsersComponentType = InitialStateType & MapDispatchToProps
+
+const mapStateToProps = (state:AppStateType):InitialStateType => {
   return{
-      users:state.usersPage.users
+      users:state.usersPage.users,
+      pageSize: state.usersPage.pageSize,
+      totalUsersCount:state.usersPage.totalUsersCount,
+      currentPage:state.usersPage.currentPage,
+      isFetching:state.usersPage.isFetching,
   }
 }
-const mapDispatchToProps = (dispatch:Dispatch):MapDispatchToProps => {
-  return{
-      toggleFollow:(userID) => {dispatch(toggleFollowAC(userID))},
-      setUsers:(users) => {dispatch(setUsersAC(users))}
-  }
-}
-const UsersContainer = connect(mapStateToProps,mapDispatchToProps)(UsersClassComponent)
+// const mapDispatchToProps = ():MapDispatchToProps => {
+//   return
+// }
+const UsersContainer = connect(mapStateToProps,{
+    toggleFollow,
+    setUsers,
+    setCurrentPage,
+    setTotalItemUsersCount,
+    setThrobberFetching,
+})(UsersClassComponent)
 
 
 export default UsersContainer

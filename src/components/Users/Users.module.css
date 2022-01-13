@@ -1,7 +1,26 @@
 .item {
     color: white;
 }
-.item img{
+.item img {
     width: 50px;
     border-radius: 35px;
 }
+
+.pages {
+    margin: 10px;
+}
+
+.selectedPage {
+    font-weight: bold;
+    color: yellow;
+}
+
+.paginationPage {
+    cursor: pointer;
+    color: white;
+}
+.extremum {
+    color: brown;
+}
+
+
