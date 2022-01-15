@@ -29,7 +29,7 @@ const mapStateToProps = (state: any): any => {
     }
 }
 
-
+//замена withRouter из пятого react-router-dom
 export function withRouter (Component:typeof React.Component) {
     return (props: object) => {
         let params = useParams();
@@ -41,6 +41,7 @@ export function withRouter (Component:typeof React.Component) {
         )
     }
 }
+//
 const ProfileContainerURL = withRouter(ProfileClassComponent)
 
 const ProfileContainer = connect(mapStateToProps, {
