@@ -10,7 +10,7 @@ type UsersType = {
     currentPage: number
     users: UserType[]
     onPageChanged: (p: number) => void
-    toggleFollow: (id: string) => void
+    followApi:(id:string) => void
 
 
 }
@@ -21,7 +21,7 @@ export function Users({
                           pageSize,
                           users,
                           onPageChanged,
-                          toggleFollow,
+                          followApi,
                       }: UsersType) {
     const urlImg = "https://pbs.twimg.com/profile_images/378800000509207351/48400919aaca1bc39b8f691c7662c894.jpeg"
     let pagesCount = Math.ceil(totalUsersCount / pageSize)
@@ -52,8 +52,8 @@ export function Users({
                   </div>
                   <div>
                       <button
-                          onClick={() => toggleFollow(u.id)}>
-                          {u.isFollowed ? "Unfollow" : "Follow"}
+                          onClick={() => followApi(u.id)}>
+                          {u.followed ? "Unfollow" : "Follow"}
                       </button>
                   </div>
             </span>

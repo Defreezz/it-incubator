@@ -2,13 +2,15 @@ type FollowType = ReturnType<typeof toggleFollow>
 type SetUsersACType = ReturnType<typeof setUsers>
 type SetCurrentPage = ReturnType<typeof setCurrentPage>
 type setTotalUsersCount = ReturnType<typeof setTotalItemUsersCount>
-type setFetching = ReturnType<typeof setThrobberFetching>
+type setFetching = ReturnType<typeof setThrobbedFetching>
+type setFollowInProgress = ReturnType<typeof setFollowInProgress>
 
 type UsersReducerAction = FollowType |
     SetUsersACType |
     SetCurrentPage |
     setTotalUsersCount |
-    setFetching
+    setFetching |
+    setFollowInProgress
 
 // type LocationType = {
 //   city:string
@@ -17,7 +19,7 @@ type UsersReducerAction = FollowType |
 
 export type UserType = {
     id: string
-    isFollowed: boolean
+    followed: boolean
     name: string
     status: string
     photos: { small: string }
@@ -28,6 +30,7 @@ export type InitialStateType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followInProgress:boolean
 }
 
 const initialState: InitialStateType = {
@@ -36,6 +39,7 @@ const initialState: InitialStateType = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
+    followInProgress:false,
 
 }
 export const usersReducer = (state: InitialStateType = initialState, action: UsersReducerAction): InitialStateType => {
@@ -45,7 +49,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Use
         case " TOGGLE-FOLLOW":
             return {
                 ...state,
-                users: state.users.map(u => u.id === action.userID ? {...u, isFollowed: !u.isFollowed} : u)
+                users: state.users.map(u => u.id === action.userID ? {...u, followed: !u.followed} : u)
             }
         case "SET-USERS":
             return {
@@ -67,6 +71,11 @@ export const usersReducer = (state: InitialStateType = initialState, action: Use
                 ...state,
                 isFetching:action.isFetching
             }
+        case "SET-FOLLOW-PROGRESS":
+            return {
+                ...state,
+                followInProgress:action.followed
+            }
 
         default:
             return state
@@ -78,4 +87,5 @@ export const toggleFollow = (userID: string) => ({type: " TOGGLE-FOLLOW", userID
 export const setUsers = (users: UserType[]) => ({type: "SET-USERS", users} as const)
 export const setCurrentPage = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage} as const)
 export const setTotalItemUsersCount = (usersCount: number) => ({type: "SET-TOTAL-USERS-COUNT", usersCount} as const)
-export const setThrobberFetching = (isFetching: boolean) => ({type: "SET-FETCHING", isFetching} as const)
+export const setThrobbedFetching = (isFetching: boolean) => ({type: "SET-FETCHING", isFetching} as const)
+export const setFollowInProgress = (followed:boolean) => ({type: "SET-FOLLOW-PROGRESS",followed} as const)
