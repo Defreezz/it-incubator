@@ -1,40 +1,43 @@
 import React from "react";
 import {UsersComponentType} from "./UsersContainer";
-import axios from "axios";
 import {Users} from "./Users";
 import {Preloader} from "../common/preloader/preloader";
+import {userApi} from "../../api/api";
 
 
 export class UsersClassComponent extends React.Component<UsersComponentType> {
     componentDidMount() {
-
-        this.props.setThrobberFetching(true)
+        this.props.setThrobbedFetching(true)
         if (!this.props.users.length) {
-            axios.get(`/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-                .then(response => {
-                    this.props.setThrobberFetching(false)
-                    this.props.setUsers(response.data.items)
-                    this.props.setTotalItemUsersCount(response.data.totalCount)
+            userApi.getUsers(this.props.currentPage, this.props.pageSize)
+                .then(data => {
+                    this.props.setThrobbedFetching(false)
+                    this.props.setUsers(data.items)
+                    this.props.setTotalItemUsersCount(data.totalCount)
                 })
+        } else {
+            this.props.setThrobbedFetching(false)
         }
+
     }
-
     onPageChanged = (pageNumber: number) => {
-        this.props.setThrobberFetching(true)
+        this.props.setThrobbedFetching(true)
         this.props.setCurrentPage(pageNumber)
-        axios.get(`/users?page=${pageNumber}&count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.setThrobberFetching(false)
-                this.props.setUsers(response.data.items)
-
-
+        userApi.getUsers(pageNumber, this.props.pageSize)
+            .then(data => {
+                this.props.setThrobbedFetching(false)
+                this.props.setUsers(data.items)
             })
     }
+    followApi = (userId:string)=>{
+        userApi.follow(userId)
+            .then(response => {if (response.data.resultCode===0) this.props.toggleFollow(userId)})
+    }
+
 
     render() {
         return (
             <>
-
                 {this.props.isFetching ? <Preloader/> : null}
 
                 <Users
@@ -43,7 +46,7 @@ export class UsersClassComponent extends React.Component<UsersComponentType> {
                     pageSize={this.props.pageSize}
                     users={this.props.users}
                     onPageChanged={this.onPageChanged}
-                    toggleFollow={this.props.toggleFollow}
+                    followApi={this.followApi}
                 />
             </>
 

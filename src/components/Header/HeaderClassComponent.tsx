@@ -2,7 +2,6 @@ import React from "react";
 import {HeaderComponentType} from "./HeaderContainer";
 import {Header} from "./Header";
 import axios from "axios";
-import {setAuthStatus} from "../../redux/authReducer";
 
 export const instance = {//пофиксится на axios create
     withCredentials: true,

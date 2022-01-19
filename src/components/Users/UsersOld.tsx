@@ -3,7 +3,7 @@ import {UsersComponentType} from "./UsersContainer";
 import s from "./Users.module.css"
 import axios from "axios";
 
-export function UsersOld({users, setUsers, toggleFollow}: UsersComponentType) {
+function UsersOld({users, setUsers, toggleFollow}: UsersComponentType) {
     const urlImg = "https://pbs.twimg.com/profile_images/378800000509207351/48400919aaca1bc39b8f691c7662c894.jpeg"
 
     if(!users.length){//БУДЕТ ФИКСИТьСЯ классовой компонентой
@@ -28,7 +28,7 @@ export function UsersOld({users, setUsers, toggleFollow}: UsersComponentType) {
                   <div>
                       <button
                           onClick={() => toggleFollowCallback(u.id)}>
-                          {u.isFollowed?"Unfollow":"Follow"}
+                          {u.followed?"Unfollow":"Follow"}
                       </button>
                   </div>
             </span>
