@@ -1,6 +1,5 @@
 import {connect} from "react-redux";
 import {InitialStateType, setUserProfile} from "../../redux/profileReducer";
-import {AppStateType} from "../../redux/reduxStore";
 import {ProfileClassComponent} from "./ProfileClassComponent";
 import React from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";

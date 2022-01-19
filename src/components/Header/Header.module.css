@@ -9,3 +9,18 @@
 .logo {
     padding: 5px;
 }
+.loginBlock {
+    float:right;
+    margin: 5px;
+
+}
+.loginBlock a{
+    text-decoration: none;
+    color: beige;
+}
+.loginBlock :hover {
+    color: #25c2e7;
+}
+.loginBlock :active {
+    color: #231f1f;
+}
