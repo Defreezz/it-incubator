@@ -1,11 +1,11 @@
-type setUserDataType = ReturnType<typeof setUserData>
-type setAuthFetchingType = ReturnType<typeof setAuthFetching>
-type setAuthStatusType = ReturnType<typeof setAuthStatus>
+type setUserData = ReturnType<typeof setUserData>
+type setAuthFetching = ReturnType<typeof setAuthFetching>
+type setAuthStatus = ReturnType<typeof setAuthStatus>
 
 type AuthReducerAction =
-    setUserDataType |
-    setAuthFetchingType |
-    setAuthStatusType
+    setUserData |
+    setAuthFetching |
+    setAuthStatus
 
 
 export type InitialStateType = {
@@ -47,7 +47,6 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
             return state
     }
 }
-
 
 
 export const setUserData = (userData: InitialStateType) => ({type: "SET-USER-DATA", userData} as const)

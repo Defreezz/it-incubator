@@ -6,7 +6,7 @@ const headerIMG = 'https://www.rulez-t.info/uploads/posts/2017-10/1508283588_rul
 
 type HeaderDataType = {
     isAuth: boolean
-    userLogin: string | null
+    userLogin: string|null
 }
 
 export const Header: React.FC<HeaderDataType> = ({isAuth, userLogin}) => {
@@ -14,18 +14,14 @@ export const Header: React.FC<HeaderDataType> = ({isAuth, userLogin}) => {
         <div className={h.header}>
             <div className={h.loginBlock}>
                 {isAuth
-                    ?
-
-                    <div className={h.logo}>
-                        <span >{userLogin}</span>
-                        <img src={headerIMG}></img>
-
-                    </div>
-
+                    ? userLogin
                     : <NavLink to={"/login"}>Login</NavLink>
                 }
             </div>
+            <div className={h.logo}>
+                <img src={headerIMG}></img>
 
+            </div>
 
         </div>
     )
