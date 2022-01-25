@@ -29,7 +29,7 @@ const mapStateToProps = (state:AppStateType):InitialStateType => {
 //   return
 // }
 export const HeaderContainer = connect(mapStateToProps,{
-    setUserData,
+    setUserData: setUserData,
     setAuthFetching,
     setAuthStatus,
 })(HeaderClassComponent)

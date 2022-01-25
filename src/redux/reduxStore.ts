@@ -1,8 +1,9 @@
-import {combineReducers, createStore } from "redux";
+import {applyMiddleware, combineReducers, createStore } from "redux";
 import {profileReducer} from "./profileReducer";
 import {dialogsReducer} from "./dialogsReducer";
 import {usersReducer} from "./usersReducer";
 import {authReducer} from "./authReducer";
+import thunkMiddleware from "redux-thunk"
 
 export type PostType = {
     id: string,
@@ -57,7 +58,7 @@ let rootReducer = combineReducers({
     usersPage:usersReducer,
     userAuth:authReducer,
 })
-export let store:any = createStore(rootReducer)
+export let store:any = createStore(rootReducer, applyMiddleware(thunkMiddleware) )
 
 // @ts-ignore
 window.store = store

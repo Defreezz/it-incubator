@@ -19,7 +19,8 @@ export type Photos = {
     large: string
     small: string
 }
-export type ProfileAPItype = {
+export type ProfileAPIType = {
+    fullName:string
     aboutMe: string
     photos: Photos
 }
@@ -28,7 +29,7 @@ export type ProfileAPItype = {
 export type InitialStateType = {
     posts: PostType[]
     newInputPostText: string
-    profile: ProfileAPItype
+    profile: ProfileAPIType
 
 }
 
@@ -41,6 +42,7 @@ let initialState: InitialStateType = {
     ],
     newInputPostText: "",
     profile: {
+        fullName:"",
         aboutMe: "",
         photos: {
             large: "",
@@ -79,6 +81,6 @@ export const UpdateInputPostAC = (newPostElement: string) => {
     return {type: "INPUT-CHANGE", inputPostText: newPostElement} as const
 
 }
-export const setUserProfile = (profile: ProfileAPItype) => {
+export const setUserProfile = (profile: ProfileAPIType) => {
     return {type: "SET-USER-PROFILE", profile} as const
 }

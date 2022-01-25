@@ -1,21 +1,20 @@
+import {Dispatch} from "redux";
+import {userApi} from "../api/api";
+
 type FollowType = ReturnType<typeof toggleFollow>
 type SetUsersACType = ReturnType<typeof setUsers>
 type SetCurrentPage = ReturnType<typeof setCurrentPage>
 type setTotalUsersCount = ReturnType<typeof setTotalItemUsersCount>
 type setFetching = ReturnType<typeof setThrobbedFetching>
-type setFollowInProgress = ReturnType<typeof setFollowInProgress>
+type setFollowingInProgress = ReturnType<typeof setFollowInProgress>
 
-type UsersReducerAction = FollowType |
-    SetUsersACType |
-    SetCurrentPage |
-    setTotalUsersCount |
-    setFetching |
-    setFollowInProgress
-
-// type LocationType = {
-//   city:string
-//   country:string
-// }
+type UsersReducerAction =
+    | FollowType
+    | SetUsersACType
+    | SetCurrentPage
+    | setTotalUsersCount
+    | setFetching
+    | setFollowingInProgress
 
 export type UserType = {
     id: string
@@ -30,7 +29,7 @@ export type InitialStateType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
-    followInProgress:boolean
+    followingInProgress: string[]
 }
 
 const initialState: InitialStateType = {
@@ -39,12 +38,9 @@ const initialState: InitialStateType = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: true,
-    followInProgress:false,
-
+    followingInProgress: [],
 }
 export const usersReducer = (state: InitialStateType = initialState, action: UsersReducerAction): InitialStateType => {
-
-
     switch (action.type) {
         case " TOGGLE-FOLLOW":
             return {
@@ -69,23 +65,54 @@ export const usersReducer = (state: InitialStateType = initialState, action: Use
         case "SET-FETCHING":
             return {
                 ...state,
-                isFetching:action.isFetching
+                isFetching: action.isFetching
             }
         case "SET-FOLLOW-PROGRESS":
             return {
                 ...state,
-                followInProgress:action.followed
+                followingInProgress: action.following
+                    ? [...state.followingInProgress, action.userID]
+                    : state.followingInProgress.filter(id => id !== action.userID)
             }
-
         default:
             return state
     }
 }
-
 
 export const toggleFollow = (userID: string) => ({type: " TOGGLE-FOLLOW", userID} as const)
 export const setUsers = (users: UserType[]) => ({type: "SET-USERS", users} as const)
 export const setCurrentPage = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage} as const)
 export const setTotalItemUsersCount = (usersCount: number) => ({type: "SET-TOTAL-USERS-COUNT", usersCount} as const)
 export const setThrobbedFetching = (isFetching: boolean) => ({type: "SET-FETCHING", isFetching} as const)
-export const setFollowInProgress = (followed:boolean) => ({type: "SET-FOLLOW-PROGRESS",followed} as const)
+export const setFollowInProgress = (following: boolean, userID: string) => ({
+    type: "SET-FOLLOW-PROGRESS",
+    following,
+    userID
+} as const)
+
+export const getUsers = (currentPage: number, pageSize: number,) => (dispatch: Dispatch) => {
+    userApi.getUsers(currentPage, pageSize)
+        .then(data => {
+            dispatch(setThrobbedFetching(false))
+            dispatch(setUsers(data.items))
+            dispatch(setTotalItemUsersCount(data.totalCount))
+        })
+}
+export const follow = (userId: string, followed: boolean) => (dispatch:Dispatch) =>{
+    if (!followed) {
+        dispatch( setFollowInProgress(true, userId))
+        userApi.follow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) dispatch( toggleFollow(userId))
+                dispatch( setFollowInProgress(false, userId))
+            })
+    } else {
+        dispatch( setFollowInProgress(true, userId))
+        userApi.unfollow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) dispatch( toggleFollow(userId))
+                dispatch( setFollowInProgress(false, userId))
+
+            })
+    }
+}
