@@ -6,7 +6,7 @@ import {
     UserType,
     InitialStateType,
     setCurrentPage,
-    setTotalItemUsersCount, setThrobbedFetching
+    setTotalItemUsersCount, setThrobbedFetching, setFollowInProgress, getUsers, follow
 } from "../../redux/usersReducer"
 import {connect} from "react-redux";
 import {UsersClassComponent} from "./UsersClassComponent";
@@ -20,7 +20,9 @@ type MapDispatchToProps = {
     setCurrentPage:(currentPage:number)=>void
     setTotalItemUsersCount:(usersCount:number)=>void
     setThrobbedFetching:(isFetching:boolean)=>void
-
+    setFollowInProgress:(followed:boolean,userID:string)=>void
+    getUsers:(currentPage:number,pageSize:number) => void
+    follow:(userId: string, followed: boolean)=>void
 }
 export type UsersComponentType = InitialStateType & MapDispatchToProps
 
@@ -31,7 +33,7 @@ const mapStateToProps = (state:AppStateType):InitialStateType => {
       totalUsersCount:state.usersPage.totalUsersCount,
       currentPage:state.usersPage.currentPage,
       isFetching:state.usersPage.isFetching,
-      followInProgress:state.usersPage.followInProgress,
+      followingInProgress:state.usersPage.followingInProgress,
   }
 }
 // const mapDispatchToProps = ():MapDispatchToProps => {
@@ -43,6 +45,10 @@ const UsersContainer = connect(mapStateToProps,{
     setCurrentPage,
     setTotalItemUsersCount,
     setThrobbedFetching,
+    setFollowInProgress,
+    getUsers,
+    follow,
+
 })(UsersClassComponent)
 
 
