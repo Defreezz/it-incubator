@@ -10,8 +10,9 @@ type UsersType = {
     currentPage: number
     users: UserType[]
     onPageChanged: (p: number) => void
-    follow:(id:string,followed:boolean) => void
-    followInProgress:string[]
+    followApi:(id:string) => void
+
+
 }
 
 export function Users({
@@ -20,8 +21,7 @@ export function Users({
                           pageSize,
                           users,
                           onPageChanged,
-                          follow,
-                          followInProgress,
+                          followApi,
                       }: UsersType) {
     const urlImg = "https://pbs.twimg.com/profile_images/378800000509207351/48400919aaca1bc39b8f691c7662c894.jpeg"
     let pagesCount = Math.ceil(totalUsersCount / pageSize)
@@ -51,8 +51,8 @@ export function Users({
                       </NavLink>
                   </div>
                   <div>
-                      <button disabled={followInProgress.some(id => id === u.id)}
-                          onClick={() => follow(u.id,u.followed)}>
+                      <button
+                          onClick={() => followApi(u.id)}>
                           {u.followed ? "Unfollow" : "Follow"}
                       </button>
                   </div>
