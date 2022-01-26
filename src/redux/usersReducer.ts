@@ -90,8 +90,6 @@ export const setFollowInProgress = (following: boolean, userID: string) => ({
     userID
 } as const)
 
-
-
 export const getUsers = (currentPage: number, pageSize: number,) => (dispatch: Dispatch) => {
     userApi.getUsers(currentPage, pageSize)
         .then(data => {

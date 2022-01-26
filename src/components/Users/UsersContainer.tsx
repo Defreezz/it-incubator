@@ -31,7 +31,7 @@ const mapStateToProps = (state:AppStateType):InitialStateType => {
       totalUsersCount:state.usersPage.totalUsersCount,
       currentPage:state.usersPage.currentPage,
       isFetching:state.usersPage.isFetching,
-      followInProgress:state.usersPage.followInProgress,
+      followingInProgress:state.usersPage.followingInProgress,
   }
 }
 // const mapDispatchToProps = ():MapDispatchToProps => {
