@@ -1,3 +1,6 @@
+import {Dispatch} from "redux";
+import {authAPI} from "../api/api";
+
 type setUserData = ReturnType<typeof setUserData>
 type setAuthFetching = ReturnType<typeof setAuthFetching>
 type setAuthStatus = ReturnType<typeof setAuthStatus>
@@ -52,3 +55,13 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
 export const setUserData = (userData: InitialStateType) => ({type: "SET-USER-DATA", userData} as const)
 export const setAuthFetching = (isFetching: boolean) => ({type: "SET-AUTH-FETCHING", isFetching} as const)
 export const setAuthStatus = (isAuthStatus: boolean) => ({type: "SET-AUTH-STATUS", isAuthStatus} as const)
+
+export const auth = ()=>(dispatch:Dispatch)=>{
+    authAPI.auth()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(setUserData(response.data.data))
+                dispatch(setAuthStatus(true))
+            }
+        })
+}

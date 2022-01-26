@@ -2,10 +2,13 @@ import Post from "./Post/Post";
 import style from "./Post/Post.module.css"
 import React from "react";
 import {MyPostsComponentType} from "./MyPostsContainer";
-import {PostType} from "../../../redux/reduxStore";
 
 
-
+export type PostType = {
+    id: string,
+    message: string,
+    likeCount: number
+}
 
 function MyPosts({posts,  newInputText,onChange,onClick}:MyPostsComponentType) {
 

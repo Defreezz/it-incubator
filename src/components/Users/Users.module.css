@@ -13,6 +13,7 @@
 .selectedPage {
     font-weight: bold;
     color: yellow;
+    cursor: pointer;
 }
 
 .paginationPage {

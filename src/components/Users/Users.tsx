@@ -39,7 +39,7 @@ export function Users({
                 {pages.map((p, index) =>
                     <span key={index}
                           onClick={() => onPageChanged(p)}
-                          className={(currentPage === p ? s.selectedPage : s.paginatorPage)
+                          className={(currentPage === p ? s.selectedPage : s.paginationPage)
                           }>{p} </span>)}
             </div>
             {users.map(u =>
