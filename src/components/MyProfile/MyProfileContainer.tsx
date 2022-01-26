@@ -1,8 +1,9 @@
 import {connect} from "react-redux";
 import {InitialStateType, setUserProfile} from "../../redux/profileReducer";
-import {ProfileClassComponent} from "./ProfileClassComponent";
+import {MyProfileClassComponent} from "./MyProfileClassComponent";
 import React from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {AppStateType} from "../../redux/reduxStore";
 
 
 export type MapDispatchToProps = {
@@ -20,9 +21,9 @@ type RouterType = {
 export type ProfileComponentType = InitialStateType & MapDispatchToProps & RouterType
 
 
-const mapStateToProps = (state: any): any => {
+const mapStateToProps = (state: AppStateType): InitialStateType => {
     return {
-        profile: state.profilePage.profile,
+        profile:state.profilePage.profile,
         newInputPostText: state.profilePage.newInputPostText,
         posts:state.profilePage.posts,
     }
@@ -34,17 +35,16 @@ export function withRouter (Component:typeof React.Component) {
         let params = useParams();
         let navigate = useNavigate()
         let location = useLocation()
-        debugger
         return (
             <Component {...props} router={{params, navigate, location}}/>
         )
     }
 }
 //
-const ProfileContainerURL = withRouter(ProfileClassComponent)
+const ProfileContainerURL = withRouter(MyProfileClassComponent)
 
-const ProfileContainer = connect(mapStateToProps, {
+const MyProfileContainer = connect(mapStateToProps, {
     setUserProfile,
 })(ProfileContainerURL)
 
-export default ProfileContainer
+export default MyProfileContainer
