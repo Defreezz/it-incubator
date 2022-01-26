@@ -13,9 +13,11 @@ export class UsersClassComponent extends React.Component<UsersComponentType> {
                 this.props.currentPage,
                 this.props.pageSize,
             )
-        } else this.props.setThrobbedFetching(false)
-
+        } else {
+            this.props.setThrobbedFetching(false)
+        }
     }
+
     onPageChanged = (pageNumber: number) => {
         this.props.setThrobbedFetching(true)
         this.props.setCurrentPage(pageNumber)
@@ -25,7 +27,6 @@ export class UsersClassComponent extends React.Component<UsersComponentType> {
     toggleFollow = (userId: string, followed: boolean) => {
         this.props.follow(userId,followed)
     }
-
 
     render() {
         return (

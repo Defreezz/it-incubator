@@ -7,22 +7,24 @@ import { Dispatch } from "redux";
 
 type MapStateToProps = {
     dialogsPage:InitialStateType
+    isAuth:boolean
 }
 type MaDispatchToProps = {
-    onChange: (inputText: string) => void
-    onclick: (text: string) => void
+    updateInputMessage: (inputText: string) => void
+    sendMessage: (text: string) => void
 }
 export type DialogsComponentType = MapStateToProps & MaDispatchToProps
 
 let mapStateToProps = (state:AppStateType):MapStateToProps =>{
     return {
-        dialogsPage:state.dialogsPage
+        dialogsPage:state.dialogsPage,
+        isAuth:state.userAuth.isAuth
     }
 }
 let mapDispatchToProps = (dispatch:Dispatch):MaDispatchToProps =>{
     return {
-        onChange:(inputText:string)=>{dispatch(updateInputMessageAC(inputText))},
-        onclick:(text:string)=>{
+        updateInputMessage:(inputText:string)=>{dispatch(updateInputMessageAC(inputText))},
+        sendMessage:(text:string)=>{
             if(text)
                 dispatch(sendMessageAC())
             if(text)

@@ -5,7 +5,7 @@ type SendType = ReturnType<typeof sendPostAC>
 type UpdateInputPostType = ReturnType<typeof UpdateInputPostAC>
 type SetUserProfileType = ReturnType<typeof setUserProfile>
 
-type ProfileReducerAction =
+export type ProfileReducerAction =
     SendType |
     UpdateInputPostType |
     SetUserProfileType

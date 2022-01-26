@@ -11,6 +11,7 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import {HeaderContainer} from "./components/Header/HeaderContainer";
 import {ProfileUserContainer} from "./components/ProfileUser/ProfileUserContainer";
+import {Login} from "./components/Login/Login";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Navbar/>
             <div className={"app-wrapper-content"}>
                 <Routes>
+                    <Route path='/login' element={<Login/>}/>
                     <Route path='/users' element={<UsersContainer/>}/>
                     <Route path='/myprofile' element={<MyProfileContainer/>}/>
                     <Route path='/profile/:userID' element={<ProfileUserContainer/>}/>

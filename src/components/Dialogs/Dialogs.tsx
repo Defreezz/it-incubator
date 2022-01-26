@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./Dialogs.module.css"
-import {NavLink} from "react-router-dom";
+import {NavLink, Navigate} from "react-router-dom";
 import {DialogType, MessageType,} from "../../redux/dialogsReducer";
 import {DialogsComponentType} from "./DialogsContainer";
 
@@ -21,16 +21,17 @@ function Message(props: MessageType) {
     )
 }
 
-function Dialogs({dialogsPage,onclick,onChange }:DialogsComponentType) {
+function Dialogs({dialogsPage, sendMessage, updateInputMessage, isAuth}: DialogsComponentType) {
     const dialogsElement = dialogsPage.dialogs.map(d => <DialogsItem key={d.id} id={d.id} name={d.name}/>);
     const messagesElement = dialogsPage.messages.map(m => <Message key={m.id} id={m.id} message={m.message}/>)
 
     const newMessageElement = React.createRef<HTMLTextAreaElement>()
 
-    const inputMessageChange = () => newMessageElement.current && onChange(newMessageElement.current.value)
-    const sendMessageCallback = () => {newMessageElement.current && onclick(newMessageElement.current.value)
+    const inputMessageChange = () => newMessageElement.current && updateInputMessage(newMessageElement.current.value)
+    const sendMessageCallback = () => newMessageElement.current && sendMessage(newMessageElement.current.value)
 
-    }
+    if (!isAuth) return <Navigate to={"/login"}/>
+
     return (
         <div className={style.dialogsContainer}>
             <div className={style.dialogsItems}>

@@ -7,10 +7,7 @@ import {userApi} from "../../api/api";
 export class ProfileUserClassComponent extends React.Component<ProfileUserComponentType> {
     componentDidMount() {
         let userID =this.props.router.params.userID
-        userApi.getUser(userID)
-            .then(response =>
-                this.props.setUserProfile(response)
-            )
+        this.props.getUser(userID)
     }
 
     render() {

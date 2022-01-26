@@ -1,5 +1,7 @@
 import {Dispatch} from "redux";
 import {userApi} from "../api/api";
+import {ThunkType} from "./reduxStore";
+import {setUserProfile} from "./profileReducer";
 
 type FollowType = ReturnType<typeof toggleFollow>
 type SetUsersACType = ReturnType<typeof setUsers>
@@ -8,7 +10,7 @@ type setTotalUsersCount = ReturnType<typeof setTotalItemUsersCount>
 type setFetching = ReturnType<typeof setThrobbedFetching>
 type setFollowingInProgress = ReturnType<typeof setFollowInProgress>
 
-type UsersReducerAction =
+export type UsersReducerAction =
     | FollowType
     | SetUsersACType
     | SetCurrentPage
@@ -78,7 +80,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Use
             return state
     }
 }
-
+//ACs
 export const toggleFollow = (userID: string) => ({type: " TOGGLE-FOLLOW", userID} as const)
 export const setUsers = (users: UserType[]) => ({type: "SET-USERS", users} as const)
 export const setCurrentPage = (currentPage: number) => ({type: "SET-CURRENT-PAGE", currentPage} as const)
@@ -89,8 +91,8 @@ export const setFollowInProgress = (following: boolean, userID: string) => ({
     following,
     userID
 } as const)
-
-export const getUsers = (currentPage: number, pageSize: number,) => (dispatch: Dispatch) => {
+//thunkCs
+export const getUsers = (currentPage: number, pageSize: number,):ThunkType => (dispatch: Dispatch) => {
     userApi.getUsers(currentPage, pageSize)
         .then(data => {
             dispatch(setThrobbedFetching(false))
@@ -98,7 +100,13 @@ export const getUsers = (currentPage: number, pageSize: number,) => (dispatch: D
             dispatch(setTotalItemUsersCount(data.totalCount))
         })
 }
-export const follow = (userId: string, followed: boolean) => (dispatch:Dispatch) =>{
+export const getUser = (userID:string):ThunkType=>(dispatch:Dispatch)=>{
+    userApi.getUser(userID)
+        .then (response =>
+            dispatch(setUserProfile(response))
+        )
+}
+export const follow = (userId: string, followed: boolean):ThunkType => (dispatch:Dispatch) =>{
     if (!followed) {
         dispatch( setFollowInProgress(true, userId))
         userApi.follow(userId)

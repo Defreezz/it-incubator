@@ -2,7 +2,7 @@ import {v1} from "uuid";
 
 type UpdateInputMessageType =  ReturnType<typeof updateInputMessageAC>
 type SendMessageType =  ReturnType<typeof sendMessageAC>
-type DialogsReducerAction = UpdateInputMessageType | SendMessageType
+export type DialogsReducerAction = UpdateInputMessageType | SendMessageType
 
 export type DialogType = {
     id: string,
@@ -38,13 +38,11 @@ const initialState:InitialStateType = {
 export const dialogsReducer = (state:InitialStateType = initialState, action:DialogsReducerAction):InitialStateType => {
     switch (action.type) {
         case "SEND-MESSAGE":
-        debugger
             return {
             ...state,
             messages:[...state.messages,{id:v1(),message: state.newInputMessageText}]
         }
         case "INPUT-MESSAGE-CHANGE":
-            debugger
             return {
                 ...state,
                 newInputMessageText: action.inputMessageText

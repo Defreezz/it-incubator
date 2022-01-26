@@ -1,14 +1,14 @@
 import {Dispatch} from "redux";
 import {loginApi} from "../api/api";
 
-type setUserData = ReturnType<typeof setUserData>
-type setAuthFetching = ReturnType<typeof setAuthFetching>
-type setAuthStatus = ReturnType<typeof setAuthStatus>
+type setUserDataType = ReturnType<typeof setMyProfileData>
+type setAuthFetchingType = ReturnType<typeof setAuthFetching>
+type setAuthStatusType = ReturnType<typeof setAuthStatus>
 
-type AuthReducerAction =
-    setUserData |
-    setAuthFetching |
-    setAuthStatus
+export type AuthReducerAction =
+    | setUserDataType
+    | setAuthFetchingType
+    | setAuthStatusType
 
 
 export type InitialStateType = {
@@ -16,7 +16,7 @@ export type InitialStateType = {
     email: string | null
     login: string | null
     isFetching: boolean
-    isAuth:boolean
+    isAuth: boolean
 }
 
 const initialState: InitialStateType = {
@@ -24,14 +24,14 @@ const initialState: InitialStateType = {
     email: null,
     login: null,
     isFetching: true,
-    isAuth:false,
+    isAuth: false,
 
 }
 export const authReducer = (state: InitialStateType = initialState, action: AuthReducerAction): InitialStateType => {
 
 
     switch (action.type) {
-        case "SET-USER-DATA":
+        case "SET-MY-PROFILE-DATA":
             return {
                 ...state,
                 ...action.userData,
@@ -39,12 +39,12 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
         case "SET-AUTH-FETCHING":
             return {
                 ...state,
-                isFetching:action.isFetching
+                isFetching: action.isFetching
             }
         case "SET-AUTH-STATUS":
             return {
                 ...state,
-                isAuth:action.isAuthStatus
+                isAuth: action.isAuthStatus
             }
         default:
             return state
@@ -52,16 +52,18 @@ export const authReducer = (state: InitialStateType = initialState, action: Auth
 }
 
 
-export const setUserData = (userData: InitialStateType) => ({type: "SET-USER-DATA", userData} as const)
+export const setMyProfileData = (userData: InitialStateType) => ({type: "SET-MY-PROFILE-DATA", userData} as const)
 export const setAuthFetching = (isFetching: boolean) => ({type: "SET-AUTH-FETCHING", isFetching} as const)
 export const setAuthStatus = (isAuthStatus: boolean) => ({type: "SET-AUTH-STATUS", isAuthStatus} as const)
-
-export const auth = ()=>(dispatch:Dispatch)=>{
-    loginApi.auth()
+//thunks
+export const auth = () => (dispatch: Dispatch) => {
+    loginApi.me()
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(setUserData(response.data.data))
+                dispatch(setMyProfileData(response.data.data))
                 dispatch(setAuthStatus(true))
+            }else{
+
             }
         })
 }

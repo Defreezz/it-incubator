@@ -1,12 +1,13 @@
 import {connect} from "react-redux";
-import {InitialStateType, ProfileAPIType, setUserProfile} from "../../redux/profileReducer";
+import {InitialStateType} from "../../redux/profileReducer";
 import {ProfileUserClassComponent} from "./ProfileUserClassComponent";
-import {withRouter} from "../MyProfile/MyProfileContainer";
 import {AppStateType} from "../../redux/reduxStore";
+import {withRouter} from "../../utilits/withRouter";
+import {getUser} from "../../redux/usersReducer";
 
 
 export type MapDispatchToProps = {
-    setUserProfile:(profile: ProfileAPIType) => void
+    getUser:(userID:string)=>void
 }
 
 type RouterType = {
@@ -31,5 +32,7 @@ const mapStateToProps = (state: AppStateType): InitialStateType => {
 
 const ProfileContainerURL = withRouter(ProfileUserClassComponent)
 
-export const ProfileUserContainer = connect(mapStateToProps, {setUserProfile})(ProfileContainerURL)
+export const ProfileUserContainer = connect(mapStateToProps, {
+    getUser,
+})(ProfileContainerURL)
 

@@ -1,13 +1,16 @@
 import {connect} from "react-redux";
-import {InitialStateType, setUserProfile} from "../../redux/profileReducer";
+import {setUserProfile} from "../../redux/profileReducer";
 import {MyProfileClassComponent} from "./MyProfileClassComponent";
 import React from "react";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {AppStateType} from "../../redux/reduxStore";
+import {withRouter} from "../../utilits/withRouter";
 
 
 export type MapDispatchToProps = {
     setUserProfile:(profile: any) => void
+}
+type MapStateToPropsType = {
+    isAuth:boolean
 }
 
 type RouterType = {
@@ -18,29 +21,16 @@ type RouterType = {
     }
 }
 
-export type ProfileComponentType = InitialStateType & MapDispatchToProps & RouterType
+export type ProfileComponentType = MapStateToPropsType & MapDispatchToProps & RouterType
 
 
-const mapStateToProps = (state: AppStateType): InitialStateType => {
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        profile:state.profilePage.profile,
-        newInputPostText: state.profilePage.newInputPostText,
-        posts:state.profilePage.posts,
+        isAuth:state.userAuth.isAuth,
     }
 }
 
 //замена withRouter из пятого react-router-dom
-export function withRouter (Component:typeof React.Component) {
-    return (props: object) => {
-        let params = useParams();
-        let navigate = useNavigate()
-        let location = useLocation()
-        return (
-            <Component {...props} router={{params, navigate, location}}/>
-        )
-    }
-}
-//
 const ProfileContainerURL = withRouter(MyProfileClassComponent)
 
 const MyProfileContainer = connect(mapStateToProps, {
