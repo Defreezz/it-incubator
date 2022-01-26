@@ -3,15 +3,13 @@ import {AppStateType} from "../../redux/reduxStore";
 
 import {connect} from "react-redux";
 import {HeaderClassComponent} from "./HeaderClassComponent";
-import {auth, InitialStateType, setAuthFetching, setAuthStatus, setUserData} from "../../redux/authReducer";
-
-
+import {auth, InitialStateType} from "../../redux/authReducer";
 
 
 type MapDispatchToProps = {
-    setUserData:(userData: InitialStateType) => void
-    setAuthFetching:(isFetching: boolean)=>void
-    setAuthStatus:(isAuthStatus:boolean)=>void
+    // setUserData:(userData: InitialStateType) => void
+    // setAuthFetching:(isFetching: boolean)=>void
+    // setAuthStatus:(isAuthStatus:boolean)=>void
     auth:()=>void
 
 }
@@ -30,10 +28,7 @@ const mapStateToProps = (state:AppStateType):InitialStateType => {
 //   return
 // }
 export const HeaderContainer = connect(mapStateToProps,{
-    setUserData,
-    setAuthFetching,
-    setAuthStatus,
-    auth,
+    auth
 })(HeaderClassComponent)
 
 
