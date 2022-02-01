@@ -1,86 +1,86 @@
-import {v1} from "uuid";
+import {ThunkType} from "./reduxStore";
+import {Dispatch} from "redux";
+import {profileApi} from "../api/api";
 
 
-type SendType = ReturnType<typeof sendPostAC>
-type UpdateInputPostType = ReturnType<typeof UpdateInputPostAC>
 type SetUserProfileType = ReturnType<typeof setUserProfile>
+type setUserStatusType = ReturnType<typeof setUserStatus>
 
 export type ProfileReducerAction =
-    SendType |
-    UpdateInputPostType |
-    SetUserProfileType
+    | SetUserProfileType
+    | setUserStatusType
 
-export type PostType = {
-    id: string,
-    message: string,
-    likeCount: number
-}
 export type Photos = {
     large: string
     small: string
 }
 export type ProfileAPIType = {
-    fullName:string
+    fullName: string
     aboutMe: string
+    userId: string
     photos: Photos
+    status:string
 }
-
-
 export type InitialStateType = {
-    posts: PostType[]
-    newInputPostText: string
     profile: ProfileAPIType
-
 }
-
-let initialState: InitialStateType = {
-    posts: [
-        {id: v1(), message: "jeeeeeeeeeronimo", likeCount: 12},
-        {id: v1(), message: "Assssssssss", likeCount: 1},
-        {id: v1(), message: "QWErty", likeCount: 22},
-        {id: v1(), message: "asd", likeCount: 3},
-    ],
-    newInputPostText: "",
+const initialState: InitialStateType = {
     profile: {
-        fullName:"",
+        fullName: "",
         aboutMe: "",
         photos: {
             large: "",
             small: "",
         },
+        status:"",
+        userId: "",
     },
-
 }
+
 
 export const profileReducer = (state: InitialStateType = initialState, action: ProfileReducerAction): InitialStateType => {
     switch (action.type) {
-        case "ADD-POST":
-            return {
-                ...state,
-                posts: [{id: v1(), message: state.newInputPostText, likeCount: 0}, ...state.posts]
-            }
-        case "INPUT-CHANGE":
-            return {
-                ...state,
-                newInputPostText: action.inputPostText
-            }
         case "SET-USER-PROFILE":
             return {
-                ...state, profile: action.profile
+                profile: {...state.profile,...action.profile}
+            }
+        case "SET-USER-STATUS":
+            return {
+                ...state,
+                profile: {...state.profile,status:action.status}
             }
         default:
             return state
     }
 }
 
-//action creators  (типа колбэков, возвращают объект экшен)
-
-export const sendPostAC = () => ({type: "ADD-POST"} as const)
-
-export const UpdateInputPostAC = (newPostElement: string) => {
-    return {type: "INPUT-CHANGE", inputPostText: newPostElement} as const
-
-}
+//AC
 export const setUserProfile = (profile: ProfileAPIType) => {
     return {type: "SET-USER-PROFILE", profile} as const
 }
+export const setUserStatus = (status: any) => {
+
+    return {type: "SET-USER-STATUS", status} as const
+}
+
+//thunksC
+export const getProfile = (userID: string): ThunkType => (dispatch: Dispatch) => {
+    profileApi.getProfile(userID)
+        .then(response =>
+            dispatch(setUserProfile(response))
+        )
+}
+
+export const getStatus = (userID: string): ThunkType => (dispatch: Dispatch) => {
+    profileApi.getStatus(userID)
+        .then(response =>
+            dispatch(setUserStatus(response.data))
+        )
+}
+export const updateStatus = (status: string): ThunkType => (dispatch: Dispatch) => {
+    profileApi.updateStatus(status)
+        .then(response =>
+            dispatch(setUserStatus(response.data))
+        )
+}
+

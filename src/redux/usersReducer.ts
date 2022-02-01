@@ -1,7 +1,7 @@
 import {Dispatch} from "redux";
 import {userApi} from "../api/api";
 import {ThunkType} from "./reduxStore";
-import {setUserProfile} from "./profileReducer";
+
 
 type FollowType = ReturnType<typeof toggleFollow>
 type SetUsersACType = ReturnType<typeof setUsers>
@@ -95,17 +95,13 @@ export const setFollowInProgress = (following: boolean, userID: string) => ({
 export const getUsers = (currentPage: number, pageSize: number,):ThunkType => (dispatch: Dispatch) => {
     userApi.getUsers(currentPage, pageSize)
         .then(data => {
+
             dispatch(setThrobbedFetching(false))
             dispatch(setUsers(data.items))
             dispatch(setTotalItemUsersCount(data.totalCount))
         })
 }
-export const getUser = (userID:string):ThunkType=>(dispatch:Dispatch)=>{
-    userApi.getUser(userID)
-        .then (response =>
-            dispatch(setUserProfile(response))
-        )
-}
+
 export const follow = (userId: string, followed: boolean):ThunkType => (dispatch:Dispatch) =>{
     if (!followed) {
         dispatch( setFollowInProgress(true, userId))

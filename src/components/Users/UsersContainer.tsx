@@ -10,6 +10,9 @@ import {
 } from "../../redux/usersReducer"
 import {connect} from "react-redux";
 import {UsersClassComponent} from "./UsersClassComponent";
+import {WithAuthRedirectComponent} from "../../utilits/withAuthRedirectComponent";
+import { compose } from "redux";
+import React from "react";
 
 
 
@@ -39,18 +42,24 @@ const mapStateToProps = (state:AppStateType):InitialStateType => {
 // const mapDispatchToProps = ():MapDispatchToProps => {
 //   return
 // }
-const UsersContainer = connect(mapStateToProps,{
-    toggleFollow,
-    setUsers,
-    setCurrentPage,
-    setTotalItemUsersCount,
-    setThrobbedFetching,
-    setFollowInProgress,
-    getUsers,
-    follow,
 
-})(UsersClassComponent)
+export default compose<typeof React.Component>(
+    WithAuthRedirectComponent,
+    connect(mapStateToProps,{
+        toggleFollow,
+        setUsers,
+        setCurrentPage,
+        setTotalItemUsersCount,
+        setThrobbedFetching,
+        setFollowInProgress,
+        getUsers,
+        follow,
+
+    }),
+    )(UsersClassComponent)
 
 
-export default UsersContainer
+
+
+
 

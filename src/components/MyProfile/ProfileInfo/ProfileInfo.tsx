@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./ProfileInfo.module.css"
+import {ProfileStatus} from "./ProfileStatus";
 
 type X = {
     img: {
@@ -17,7 +18,7 @@ function ProfileInfo(props: X) {
                 </div>
                 <div className={style.descriptionBox}>
                     <img className={style.ava} src={props.img.img2}></img>
-                    ava
+                    <ProfileStatus status={"sas"}/>
                 </div>
             </div>
         )

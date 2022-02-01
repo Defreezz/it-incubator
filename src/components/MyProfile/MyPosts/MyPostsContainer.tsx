@@ -1,6 +1,6 @@
 import {AppStateType} from "../../../redux/reduxStore";
 import React from "react";
-import {sendPostAC, UpdateInputPostAC} from "../../../redux/profileReducer";
+import {sendPostAC, UpdateInputPostAC} from "../../../redux/myProfileReducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
@@ -23,8 +23,8 @@ export type MyPostsComponentType = MapStateToProps & MapDispatchToProps
 
 const mapStateToProps = (state:AppStateType):MapStateToProps => {
   return{
-      posts:state.profilePage.posts,
-      newInputText:state.profilePage.newInputPostText
+      posts:state.myProfilePage.posts,
+      newInputText:state.myProfilePage.newInputPostText
   }
 }
 const mapDispatchToProps = (dispatch:Dispatch):MapDispatchToProps => {

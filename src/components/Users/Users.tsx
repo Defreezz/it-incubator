@@ -60,7 +60,7 @@ export function Users({
                     <span>
                 <span>
                     <div>{u.name}</div>
-                    <div>{u.status}</div>
+
                 </span>
                 <span>
                     {/*<div>{u.location.city}</div>*/}
