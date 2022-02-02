@@ -11,6 +11,7 @@ export class ProfileStatus extends React.Component <ProfileStatusType> {
         editMode: false,
         status:this.props.status
     }
+
     statusChange=(e:ChangeEvent<HTMLInputElement>)=>{
         this.setState({
             status:e.currentTarget.value
@@ -28,16 +29,18 @@ export class ProfileStatus extends React.Component <ProfileStatusType> {
     }
 
     render() {
+        debugger
         return (
             <>
                 {this.state.editMode
                     ? <div>
                         <input
+                            
                             value={this.state.status}
                             onBlur={this.editModeToggle}
                             autoFocus
                             onChange={this.statusChange}
-                        ></input>
+                        />
 
                         <button onClick={()=>
                         {this.saveStatus()}}>Save</button>
