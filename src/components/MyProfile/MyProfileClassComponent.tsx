@@ -1,16 +1,22 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
 import MyProfile from "./MyProfile";
 import {ProfileComponentType} from "./MyProfileContainer";
-import {WithAuthRedirectComponent} from "../../utilits/withAuthRedirectComponent";
-
 
 
 export class MyProfileClassComponent extends React.Component<ProfileComponentType> {
 
+    componentDidMount() {
+        this.props.getMyStatus(this.props.id)
+    }
+
     render() {
+        const {id, updateStatus, status} = this.props
         return (
-            <MyProfile />
+            <MyProfile
+                status={status}
+                id={id}
+                updateStatus={updateStatus}
+            />
         )
     }
 

@@ -27,6 +27,7 @@ export type ProfileUserComponentType = InitialStateType & MapDispatchToProps & R
 const mapStateToProps = (state: AppStateType): InitialStateType => {
     return {
         profile: state.profilePage.profile,
+        myStatus:state.profilePage.myStatus
     }
 }
 

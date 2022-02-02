@@ -11,7 +11,6 @@ type ProfileUserType = {
 export class ProfileUser extends React.Component<ProfileUserType> {
 
     render() {
-        debugger
         if (!this.props.profile) {
             return <Preloader/>
         } else {

@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {loginApi} from "../api/api";
+import {ThunkType} from "./reduxStore";
 
 type setUserDataType = ReturnType<typeof setMyProfileData>
 type setAuthFetchingType = ReturnType<typeof setAuthFetching>
@@ -12,7 +13,7 @@ export type AuthReducerAction =
 
 
 export type InitialStateType = {
-    id: string | null
+    id: string
     email: string | null
     login: string | null
     isFetching: boolean
@@ -20,7 +21,7 @@ export type InitialStateType = {
 }
 
 const initialState: InitialStateType = {
-    id: null,
+    id: "",
     email: null,
     login: null,
     isFetching: true,
@@ -56,7 +57,7 @@ export const setMyProfileData = (userData: InitialStateType) => ({type: "SET-MY-
 export const setAuthFetching = (isFetching: boolean) => ({type: "SET-AUTH-FETCHING", isFetching} as const)
 export const setAuthStatus = (isAuthStatus: boolean) => ({type: "SET-AUTH-STATUS", isAuthStatus} as const)
 //thunks
-export const auth = () => (dispatch: Dispatch) => {
+export const auth = ():ThunkType => (dispatch: Dispatch) => {
     loginApi.me()
         .then(response => {
             if (response.data.resultCode === 0) {

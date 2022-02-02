@@ -94,11 +94,11 @@ export const setFollowInProgress = (following: boolean, userID: string) => ({
 //thunkCs
 export const getUsers = (currentPage: number, pageSize: number,):ThunkType => (dispatch: Dispatch) => {
     userApi.getUsers(currentPage, pageSize)
-        .then(data => {
-
+        .then(res => {
             dispatch(setThrobbedFetching(false))
-            dispatch(setUsers(data.items))
-            dispatch(setTotalItemUsersCount(data.totalCount))
+            dispatch(setUsers(res.data.items))
+            res.data.totalCount &&
+            dispatch(setTotalItemUsersCount(res.data.totalCount))
         })
 }
 

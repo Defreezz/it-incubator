@@ -12,7 +12,6 @@ export class ProfileUserClassComponent extends React.Component<ProfileUserCompon
     }
 
     render() {
-        debugger
         return (
             <ProfileUser profile={this.props.profile}/>
         )

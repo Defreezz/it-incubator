@@ -1,4 +1,21 @@
 import axios from "axios";
+import {UserType} from "../redux/usersReducer";
+import {InitialStateType} from "../redux/authReducer";
+import {ProfileAPIType} from "../redux/profileReducer";
+
+type GetUsersType = {
+    error: 0|1
+    items: UserType[]
+    totalCount: number
+}
+type ProfileType = ProfileAPIType
+type CommonResponseType<T> = {
+    data: T
+    fieldsErrors: []
+    messages: []
+    resultCode: 0|1
+}
+
 
 export const instance = axios.create({
     withCredentials: true,
@@ -11,31 +28,31 @@ export const instance = axios.create({
 
 export const userApi = {
     getUsers(currentPage: number, pageSize: number) {
-        return instance.get(`/users?page=${currentPage}&count=${pageSize}`)
-            .then(response => response.data)
+        return instance.get<GetUsersType>(`/users?page=${currentPage}&count=${pageSize}`)
+            .then(response => response)
     },
     follow(userId: string) {
-        return instance.post(`/follow/${userId}`)
+        return instance.post<CommonResponseType<{ }>>(`/follow/${userId}`)
     },
     unfollow(userId: string) {
-        return instance.delete(`/follow/${userId}`)
+        return instance.delete<CommonResponseType<{ }>>(`/follow/${userId}`)
     }
 }
 export const loginApi = {
     me() {
-        return instance.get(`/auth/me`)
+        return instance.get<CommonResponseType<InitialStateType>>(`/auth/me`)
     },
 }
 export const profileApi = {
     getProfile(userID: string) {
-        return instance.get(`/profile/` + userID)
+        return instance.get<ProfileType>(`/profile/` + userID)
             .then(response => response.data)
     },
     getStatus(userID:string){
-        return instance.get(`/profile/status/`+ userID)
+        return instance.get<string>(`/profile/status/`+ userID)
     },
     updateStatus(status:string){
-        return instance.put(`/profile/status/`,{status})
+        return instance.put(`/profile/status/`,{status:status})
     }
 }
 
