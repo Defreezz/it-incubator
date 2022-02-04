@@ -1,10 +1,5 @@
 import {v1} from "uuid";
 
-
-
-
-
-
 type PostType = {
     id: string,
     message: string,
@@ -43,11 +38,6 @@ type RootStateType = {
     getState: () => RootStateType
     dispatch: (action:ALLActionTypes) => void
 }
-
-
-
-
-
 
  const store:StoreType = {
     _state:  {
