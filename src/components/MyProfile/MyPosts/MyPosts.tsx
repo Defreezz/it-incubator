@@ -2,7 +2,7 @@ import Post from "./Post/Post";
 import style from "./Post/Post.module.css"
 import React from "react";
 import {MyPostsComponentType} from "./MyPostsContainer";
-
+import {PostForm, PostFormRedux} from "./AddPostForm";
 
 export type PostType = {
     id: string,
@@ -10,35 +10,41 @@ export type PostType = {
     likeCount: number
 }
 
-function MyPosts({posts,  newInputText,onChange,onClick}:MyPostsComponentType) {
+class MyPosts extends React.Component<MyPostsComponentType> {
 
-    const newPostElement = React.createRef<HTMLTextAreaElement>()
-    const post = (p:PostType,index:number) => <Post key={index} id={p.id} likeCount={p.likeCount} message={p.message}/>
-    const postsElement = posts.map((p,index) => post(p,index))
+    addPost(post:PostForm){
+        this.props.sendPost(post.newPostBody)
+        this.props.resetForm('newPostBody')
+    }
+    render() {
 
-    const onInputTextChange = () => newPostElement.current && onChange(newPostElement.current.value)
-    const onAddPost = () => newPostElement.current && onClick(newPostElement.current.value)
+        const {posts} = this.props;
+        const postsElement = posts.map((p, index) =>
+            <div>
+                <Post
+                    key={index}
+                    id={p.id}
+                    likeCount={p.likeCount}
+                    message={p.message}
+                />
+            </div>)
 
-    //JSX
-    return (
-        <div className={style.item}>
-            <h3>my post</h3>
-            <div>
-                <textarea
-                    onChange={onInputTextChange}
-                    ref={newPostElement}
-                    value={newInputText}
-                > </textarea>
+
+        // const onInputTextChange = () => newPostElement.current && onChange(newPostElement.current.value)
+        //const onAddPost = () => newPostElement.current && onClick(newPostElement.current.value)
+
+        //JSX
+        return (
+            <div className={style.item}>
+                <h3>my post</h3>
+                <PostFormRedux onSubmit={this.addPost.bind(this)}/>
+                <div>
+                    new post
+                </div>
+                {postsElement}
             </div>
-            <div>
-                <button onClick={onAddPost}>Add post</button>
-            </div>
-            <div>
-                new post
-            </div>
-            {postsElement}
-        </div>
-    )
+        )
+    }
 }
 
 export default MyPosts

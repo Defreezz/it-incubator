@@ -1,15 +1,15 @@
-import {InitialStateType, sendMessageAC, updateInputMessageAC} from "../../redux/dialogsReducer";
-import  {DialogsClassComponent} from "./DialogsClassComponent";
+import {InitialStateType, sendMessageAC} from "../../redux/dialogsReducer";
+import {DialogsClassComponent} from "./DialogsClassComponent";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/reduxStore";
 import {Dispatch} from "redux";
-import {WithAuthRedirectComponent} from "../../utilits/withAuthRedirectComponent";
+import {WithAuthRedirectComponent} from "../../utilits/WithAuthRedirectComponent";
 
 type MapStateToProps = {
     dialogsPage:InitialStateType
 }
 type MaDispatchToProps = {
-    updateInputMessage: (inputText: string) => void
+    //updateInputMessage: (inputText: string) => void
     sendMessage: (text: string) => void
 }
 export type DialogsComponentType = MapStateToProps & MaDispatchToProps
@@ -21,12 +21,10 @@ let mapStateToProps = (state:AppStateType):MapStateToProps =>{
 }
 let mapDispatchToProps = (dispatch:Dispatch):MaDispatchToProps =>{
     return {
-        updateInputMessage:(inputText:string)=>{dispatch(updateInputMessageAC(inputText))},
+        //updateInputMessage:(inputText:string)=>{dispatch(updateInputMessageAC(inputText))},
         sendMessage:(text:string)=>{
             if(text)
-                dispatch(sendMessageAC())
-            if(text)
-                dispatch(updateInputMessageAC(""))
+                dispatch(sendMessageAC(text))
         }
     }
 }

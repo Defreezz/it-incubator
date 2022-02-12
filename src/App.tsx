@@ -12,6 +12,7 @@ import {HeaderContainer} from "./components/Header/HeaderContainer";
 import {ProfileUserContainer} from "./components/ProfileUser/ProfileUserContainer";
 import {Login} from "./components/Login/Login";
 import UsersContainer from "./components/Users/UsersContainer";
+import {LoginContainer} from "./components/Login/LoginContainer";
 
 
 function App() {
@@ -21,9 +22,9 @@ function App() {
             <Navbar/>
             <div className={"app-wrapper-content"}>
                 <Routes>
-                    <Route path='/' element={<MyProfileContainer/>}/>
+                    <Route path='/' element={<News/>}/>
+                    <Route path='/login' element={<LoginContainer/>}/>
 
-                    <Route path='/login' element={<Login/>}/>
                     <Route path='/users' element={<UsersContainer/>}/>
                     <Route path='/myprofile' element={<MyProfileContainer/>}/>
                     <Route path='/profile/:userID' element={<ProfileUserContainer/>}/>
@@ -31,9 +32,11 @@ function App() {
                     <Route path='/news' element={<News/>}/>
                     <Route path='/music' element={<Music/>}/>
                     <Route path='/settings' element={<Settings/>}/>
-                    <Route path='/sidebar' element={<Sidebar />}/>
+                    <Route path='/sidebar' element={<Sidebar/>}/>
                 </Routes>
             </div>
+
+
 
         </div>
     );

@@ -78,26 +78,27 @@ export const setMyStatus = (status: string) => {
 }
 
 //thunksC
-export const getProfile = (userID: string): ThunkType => (dispatch: Dispatch) => {
-    profileApi.getProfile(userID)
+export const getUserProfile = (userID: string): ThunkType => (dispatch ) => {
+    profileApi.getUserProfile(userID)
         .then(response =>
             dispatch(setUserProfile(response))
         )
+    dispatch(getUserStatus(userID))
 }
 
-export const getStatus = (userID: string): ThunkType => (dispatch: Dispatch) => {
+const getUserStatus = (userID: string): ThunkType => (dispatch ) => {
     profileApi.getStatus(userID)
         .then(response =>
             dispatch(setUserStatus(response.data))
         )
 }
-export const getMyStatus = (userID: string): ThunkType => (dispatch: Dispatch) => {
+export const getMyStatus = (userID: string): ThunkType => (dispatch ) => {
     profileApi.getStatus(userID)
         .then(response =>
             dispatch(setMyStatus(response.data))
         )
 }
-export const updateStatus = (status: string): ThunkType => (dispatch: Dispatch) => {
+export const updateStatus = (status: string): ThunkType => (dispatch ) => {
     profileApi.updateStatus(status)
         .then(response => {
                 if (response.data.resultCode === 0)

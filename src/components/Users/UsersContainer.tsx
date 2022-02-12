@@ -10,7 +10,7 @@ import {
 } from "../../redux/usersReducer"
 import {connect} from "react-redux";
 import {UsersClassComponent} from "./UsersClassComponent";
-import {WithAuthRedirectComponent} from "../../utilits/withAuthRedirectComponent";
+import {WithAuthRedirectComponent} from "../../utilits/WithAuthRedirectComponent";
 import { compose } from "redux";
 import React from "react";
 

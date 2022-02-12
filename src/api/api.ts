@@ -36,15 +36,29 @@ export const userApi = {
     },
     unfollow(userId: string) {
         return instance.delete<CommonResponseType<{ }>>(`/follow/${userId}`)
-    }
+    },
 }
+
+
+
 export const loginApi = {
     me() {
         return instance.get<CommonResponseType<InitialStateType>>(`/auth/me`)
     },
+    login (email:string,password:string,rememberMe:boolean = false) {
+        return instance.post<CommonResponseType<InitialStateType>>(`/auth/login`,{
+            email,password,rememberMe
+        })
+    },
+    logout () {
+        return instance.delete<CommonResponseType<{ }>>(`/auth/login`)
+    },
 }
+
+
+
 export const profileApi = {
-    getProfile(userID: string) {
+    getUserProfile(userID: string) {
         return instance.get<ProfileType>(`/profile/` + userID)
             .then(response => response.data)
     },
@@ -52,8 +66,8 @@ export const profileApi = {
         return instance.get<string>(`/profile/status/`+ userID)
     },
     updateStatus(status:string){
-        return instance.put(`/profile/status/`,{status:status})
-    }
+        return instance.put<CommonResponseType<{ }>>(`/profile/status/`,{status:status})
+    },
 }
 
 

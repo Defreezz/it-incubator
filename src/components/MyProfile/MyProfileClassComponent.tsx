@@ -6,15 +6,15 @@ import {ProfileComponentType} from "./MyProfileContainer";
 export class MyProfileClassComponent extends React.Component<ProfileComponentType> {
 
     componentDidMount() {
-        this.props.getMyStatus(this.props.id)
+        this.props.getMyStatus(this.props.myID)
     }
 
     render() {
-        const {id, updateStatus, status} = this.props
+        const {myID, updateStatus, status} = this.props
         return (
             <MyProfile
                 status={status}
-                id={id}
+                id={myID}
                 updateStatus={updateStatus}
             />
         )

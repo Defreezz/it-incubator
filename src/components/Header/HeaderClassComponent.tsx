@@ -13,6 +13,7 @@ export class HeaderClassComponent extends React.Component<HeaderComponentType> {
             <Header
                 userLogin={this.props.login}
                 isAuth={this.props.isAuth}
+                logout={this.props.logout}
             />
 
         )

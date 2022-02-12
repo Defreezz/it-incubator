@@ -1,9 +1,11 @@
 import {AppStateType} from "../../../redux/reduxStore";
 import React from "react";
-import {sendPostAC, UpdateInputPostAC} from "../../../redux/myProfileReducer";
+import {sendPost} from "../../../redux/myProfileReducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
+import {reset} from "redux-form";
+import {resetForm} from "../../../redux/authReducer";
 
 export type PostType = {
     id: string,
@@ -13,32 +15,21 @@ export type PostType = {
 
 type MapStateToProps = {
     posts:PostType[]
-    newInputText:string
+
 }
 type MapDispatchToProps = {
-    onChange:(text:string) => void
-    onClick:(text:string) => void
+    sendPost:(text:string) => void
+    resetForm:(formName:string) => void
 }
 export type MyPostsComponentType = MapStateToProps & MapDispatchToProps
 
 const mapStateToProps = (state:AppStateType):MapStateToProps => {
   return{
       posts:state.myProfilePage.posts,
-      newInputText:state.myProfilePage.newInputPostText
+
   }
 }
-const mapDispatchToProps = (dispatch:Dispatch):MapDispatchToProps => {
-  return{
-      onChange:(text:string) => {text && dispatch(UpdateInputPostAC(text))},
-      onClick: (inputText:string) => {
-          if(inputText)
-              dispatch(sendPostAC())
-          if(inputText)
-              dispatch(UpdateInputPostAC(""))
-      }
-  }
-}
-const MyPostsContainer = connect(mapStateToProps,mapDispatchToProps)(MyPosts)
+const MyPostsContainer = connect(mapStateToProps, {sendPost,resetForm})(MyPosts)
 
 
 export default MyPostsContainer

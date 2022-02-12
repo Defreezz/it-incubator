@@ -1,8 +1,8 @@
 import {v1} from "uuid";
 
-type UpdateInputMessageType =  ReturnType<typeof updateInputMessageAC>
+// type UpdateInputMessageType =  ReturnType<typeof updateInputMessageAC>
 type SendMessageType =  ReturnType<typeof sendMessageAC>
-export type DialogsReducerAction = UpdateInputMessageType | SendMessageType
+export type DialogsReducerAction =  | SendMessageType
 
 export type DialogType = {
     id: string,
@@ -15,7 +15,6 @@ export type MessageType = {
 export type InitialStateType =  {
     dialogs:DialogType[]
     messages:MessageType[]
-    newInputMessageText:string
 }
 
 const initialState:InitialStateType = {
@@ -31,7 +30,6 @@ const initialState:InitialStateType = {
         {id: v1(), message: "пивет"},
         {id: v1(), message: "4o "},
     ],
-    newInputMessageText:""
 
 }
 
@@ -40,23 +38,23 @@ export const dialogsReducer = (state:InitialStateType = initialState, action:Dia
         case "SEND-MESSAGE":
             return {
             ...state,
-            messages:[...state.messages,{id:v1(),message: state.newInputMessageText}]
+            messages:[...state.messages,{id:v1(),message: action.newMessageBody}]
         }
-        case "INPUT-MESSAGE-CHANGE":
-            return {
-                ...state,
-                newInputMessageText: action.inputMessageText
-            }
+        // case "INPUT-MESSAGE-CHANGE":
+        //     return {
+        //         ...state,
+        //         newInputMessageText: action.inputMessageText
+        //     }
         default: return state
     }
 }
 
 //action creators  (типа колбэков, возвращают объект экшен)
 
-export const sendMessageAC = () => ({type:"SEND-MESSAGE"} as const)
+export const sendMessageAC = (newMessageBody:string) => ({type:"SEND-MESSAGE",newMessageBody} as const)
 
-export const updateInputMessageAC = (newMessageElement:string) => (
-    {type:"INPUT-MESSAGE-CHANGE", inputMessageText:newMessageElement} as const)
+// export const updateInputMessageAC = (newMessageElement:string) => (
+//     {type:"INPUT-MESSAGE-CHANGE", inputMessageText:newMessageElement} as const)
 
 
 

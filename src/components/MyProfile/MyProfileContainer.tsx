@@ -4,7 +4,7 @@ import React from "react";
 import {AppStateType} from "../../redux/reduxStore";
 import {compose} from "redux";
 import {getMyStatus, updateStatus} from "../../redux/profileReducer";
-import {WithAuthRedirectComponent} from "../../utilits/withAuthRedirectComponent";
+import {WithAuthRedirectComponent} from "../../utilits/WithAuthRedirectComponent";
 
 
 export type MapDispatchToProps = {
@@ -12,7 +12,7 @@ export type MapDispatchToProps = {
     updateStatus:(status:string)=>void
 }
 type MapStateToPropsType = {
-    id: string
+    myID: string
     status:string
 }
 
@@ -20,7 +20,7 @@ export type ProfileComponentType = MapStateToPropsType & MapDispatchToProps
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        id:state.userAuth.id,
+        myID:state.userAuth.id,
         status:state.profilePage.myStatus
     }
 }

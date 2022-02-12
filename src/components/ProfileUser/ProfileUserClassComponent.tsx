@@ -8,7 +8,7 @@ export class ProfileUserClassComponent extends React.Component<ProfileUserCompon
 
         let userID = this.props.router.params.userID
         this.props.getUser(userID)
-        this.props.getStatus(userID)
+        //this.props.getStatus(userID) // забираем статус сразу в санке getUser
     }
 
     render() {
