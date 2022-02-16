@@ -17,7 +17,8 @@ export const WithAuthRedirectComponent = (Component: typeof React.Component) => 
         const {isAuth,...restProps} = props
         if (!isAuth) return <Navigate to={"/login"}/>
 
-        else return <Component {...restProps}/>
+        else
+            return <Component {...restProps}/>
     }
 
    return( connect(mapStateToProps)(RedirectComponent))

@@ -4,10 +4,6 @@ import {Header} from "./Header";
 
 
 export class HeaderClassComponent extends React.Component<HeaderComponentType> {
-    componentDidMount() {
-        this.props.auth()
-    }
-
     render() {
         return (
             <Header

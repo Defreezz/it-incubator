@@ -43,7 +43,7 @@ export const userApi = {
 
 export const loginApi = {
     me() {
-        return instance.get<CommonResponseType<InitialStateType>>(`/auth/me`)
+        return  instance.get<CommonResponseType<InitialStateType>>(`/auth/me`)
     },
     login (email:string,password:string,rememberMe:boolean = false) {
         return instance.post<CommonResponseType<InitialStateType>>(`/auth/login`,{

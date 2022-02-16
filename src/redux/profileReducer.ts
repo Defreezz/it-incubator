@@ -1,5 +1,4 @@
 import {ThunkType} from "./reduxStore";
-import {Dispatch} from "redux";
 import {profileApi} from "../api/api";
 
 

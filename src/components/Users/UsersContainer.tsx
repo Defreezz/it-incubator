@@ -13,6 +13,12 @@ import {UsersClassComponent} from "./UsersClassComponent";
 import {WithAuthRedirectComponent} from "../../utilits/WithAuthRedirectComponent";
 import { compose } from "redux";
 import React from "react";
+import {
+    getCurrentPageSelector, getFollowingInProgressSelector, getIsFetchingSelector,
+    getPageSizeSelector,
+    getTotalUsersCountSelector,
+    getUsersSelector
+} from "../../redux/usersSelectors";
 
 
 
@@ -31,12 +37,12 @@ export type UsersComponentType = InitialStateType & MapDispatchToProps
 
 const mapStateToProps = (state:AppStateType):InitialStateType => {
   return{
-      users:state.usersPage.users,
-      pageSize: state.usersPage.pageSize,
-      totalUsersCount:state.usersPage.totalUsersCount,
-      currentPage:state.usersPage.currentPage,
-      isFetching:state.usersPage.isFetching,
-      followingInProgress:state.usersPage.followingInProgress,
+      users:getUsersSelector(state),
+      pageSize: getPageSizeSelector(state),
+      totalUsersCount:getTotalUsersCountSelector(state),
+      currentPage:getCurrentPageSelector(state),
+      isFetching:getIsFetchingSelector(state),
+      followingInProgress:getFollowingInProgressSelector(state),
   }
 }
 // const mapDispatchToProps = ():MapDispatchToProps => {
