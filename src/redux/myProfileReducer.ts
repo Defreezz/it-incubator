@@ -3,7 +3,6 @@ import {ThunkType} from "./reduxStore";
 import {profileApi} from "../api/api";
 import {Photos, ProfileAPIType} from "./profileReducer";
 
-
 type SendPostType = ReturnType<typeof sendPost>
 type setMyStatusType = ReturnType<typeof setMyStatus>
 type saveMyPhotoType = ReturnType<typeof saveMyPhoto>
