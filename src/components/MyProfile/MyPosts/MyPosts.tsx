@@ -20,9 +20,8 @@ class MyPosts extends React.Component<MyPostsComponentType> {
 
         const {posts} = this.props;
         const postsElement = posts.map((p, index) =>
-            <div>
+            <div key={index}>
                 <Post
-                    key={index}
                     id={p.id}
                     likeCount={p.likeCount}
                     message={p.message}

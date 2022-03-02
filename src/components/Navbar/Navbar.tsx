@@ -10,13 +10,9 @@ type NavbarItemDataType = {
 }
 
 const navbarItemData:NavbarItemDataType[] = [
-    {id:v1(),name:"Users", path:"/users"},
     {id:v1(), name: "My Profile", path: "/myprofile"},
     {id:v1(),name: "Messages", path: "/dialogs"},
-    {id:v1(),name: "News", path: "/news"},
-    {id:v1(),name: "Music", path: "/music"},
-    {id:v1(),name: "Settings", path: "/settings"},
-   // {id:v1(),name: "Sidebar", path: "/sidebar"},
+    {id:v1(),name:"Users", path:"/users"},
 ]
 type NavbarItemType = {
     linkTO: string

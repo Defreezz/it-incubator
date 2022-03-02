@@ -1,22 +1,24 @@
 import React from "react";
-import MyProfile from "./MyProfile";
 import {ProfileComponentType} from "./MyProfileContainer";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
 
 export class MyProfileClassComponent extends React.Component<ProfileComponentType> {
 
-    componentDidMount() {
-        this.props.getMyStatus(this.props.myID)
-    }
-
     render() {
-        const {myID, updateStatus, status} = this.props
+        const {profile, updateMyStatus,updateMyProfile,savePhoto, status} = this.props
         return (
-            <MyProfile
-                status={status}
-                id={myID}
-                updateStatus={updateStatus}
-            />
+            <div>
+                <ProfileInfo
+                    myProfile={profile}
+                    status={status}
+                    updateMyStatus={updateMyStatus}
+                    updateMyProfile={updateMyProfile}
+                    savePhoto={savePhoto}
+                />
+                <MyPostsContainer/>
+            </div>
         )
     }
 

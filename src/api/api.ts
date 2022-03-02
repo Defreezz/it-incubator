@@ -1,7 +1,7 @@
 import axios from "axios";
 import {UserType} from "../redux/usersReducer";
 import {InitialStateType} from "../redux/authReducer";
-import {ProfileAPIType} from "../redux/profileReducer";
+import {Photos, ProfileAPIType} from "../redux/profileReducer";
 
 type GetUsersType = {
     error: 0|1
@@ -16,7 +16,6 @@ type CommonResponseType<T> = {
     resultCode: 0|1
 }
 
-
 export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -25,8 +24,7 @@ export const instance = axios.create({
     }
 })
 
-
-export const userApi = {
+export const usersApi = {
     getUsers(currentPage: number, pageSize: number) {
         return instance.get<GetUsersType>(`/users?page=${currentPage}&count=${pageSize}`)
             .then(response => response)
@@ -38,8 +36,6 @@ export const userApi = {
         return instance.delete<CommonResponseType<{ }>>(`/follow/${userId}`)
     },
 }
-
-
 
 export const loginApi = {
     me() {
@@ -55,8 +51,6 @@ export const loginApi = {
     },
 }
 
-
-
 export const profileApi = {
     getUserProfile(userID: string) {
         return instance.get<ProfileType>(`/profile/` + userID)
@@ -66,8 +60,20 @@ export const profileApi = {
         return instance.get<string>(`/profile/status/`+ userID)
     },
     updateStatus(status:string){
-        return instance.put<CommonResponseType<{ }>>(`/profile/status/`,{status:status})
+        return instance.put<CommonResponseType<{ }>>(`/profile/status/`,{status})
     },
+    setPhoto(file:File){
+        const formData = new FormData();
+        formData.append("image", file);
+        return instance.put <CommonResponseType<Photos>>(`/profile/photo/`,formData,{
+            headers:{
+                "Content-Type":'multipart/form-data'
+            }
+        })
+    },
+    updateProfile(updateModel:ProfileAPIType){
+        return instance.put<CommonResponseType<{  }>>(`/profile/`,updateModel)
+    }
 }
 
 

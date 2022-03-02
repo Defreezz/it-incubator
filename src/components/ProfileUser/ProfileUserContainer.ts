@@ -2,14 +2,14 @@ import {connect} from "react-redux";
 
 import {ProfileUserClassComponent} from "./ProfileUserClassComponent";
 import {AppStateType} from "../../redux/reduxStore";
-import {withRouterComponent} from "../../utilits/WithRouterComponent";
+import {withRouterComponent} from "../common/Hoc/WithRouterComponent";
 import {compose} from "redux";
 import React from "react";
-import { getUserProfile, InitialStateType} from "../../redux/profileReducer";
+import {getUserProfile, InitialStateType, ProfileAPIType} from "../../redux/profileReducer";
 
 
 export type MapDispatchToProps = {
-    getUser: (userID: string) => void
+    getUserProfile: (userID: string) => ProfileAPIType
     getStatus: (status: any) => void
 }
 
@@ -31,10 +31,11 @@ const mapStateToProps = (state: AppStateType): InitialStateType => {
     }
 }
 
-export const ProfileUserContainer = compose<typeof React.Component>(
+ const ProfileUserContainer = compose<typeof React.Component>(
     withRouterComponent,
     connect(
         mapStateToProps,
-        {getUser: getUserProfile, })
+        {getUserProfile, })
 )(ProfileUserClassComponent)
 
+export default ProfileUserContainer

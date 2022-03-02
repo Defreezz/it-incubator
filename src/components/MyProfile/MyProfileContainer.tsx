@@ -3,16 +3,20 @@ import {MyProfileClassComponent} from "./MyProfileClassComponent";
 import React from "react";
 import {AppStateType} from "../../redux/reduxStore";
 import {compose} from "redux";
-import {getMyStatus, updateStatus} from "../../redux/profileReducer";
-import {WithAuthRedirectComponent} from "../../utilits/WithAuthRedirectComponent";
+
+import {WithAuthRedirectComponent} from "../common/Hoc/WithAuthRedirectComponent";
+import {ProfileAPIType} from "../../redux/profileReducer";
+import {getMyStatus, MyProfileType, savePhoto, updateMyProfile, updateMyStatus} from "../../redux/myProfileReducer";
 
 
 export type MapDispatchToProps = {
-    getMyStatus:(userID: string)=>void
-    updateStatus:(status:string)=>void
+    updateMyProfile:(updateModel:Partial<ProfileAPIType>)=>void,
+    getMyStatus?:(userID: string)=>void
+    updateMyStatus:(status:string)=>void
+    savePhoto:(file:File,userID:string)=>void
 }
 type MapStateToPropsType = {
-    myID: string
+    profile: MyProfileType
     status:string
 }
 
@@ -20,8 +24,8 @@ export type ProfileComponentType = MapStateToPropsType & MapDispatchToProps
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        myID:state.userAuth.id,
-        status:state.profilePage.myStatus
+        profile: state.myProfilePage.myProfile,
+        status:state.myProfilePage.myStatus
     }
 }
 
@@ -29,6 +33,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 export default compose<typeof React.Component>(
     WithAuthRedirectComponent,
     connect(mapStateToProps,
-        {getMyStatus,updateStatus })
+        {getMyStatus, updateMyStatus,savePhoto, updateMyProfile })
 )(MyProfileClassComponent)
 

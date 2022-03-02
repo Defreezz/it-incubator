@@ -19,6 +19,3 @@ export function createPaginator(pages:number[], pagesCount:number, currentPage:n
         }
     }
 }
-let pages:number[] = []
-createPaginator(pages,50,6)
-console.log(pages)

@@ -3,7 +3,7 @@ import {DialogsClassComponent} from "./DialogsClassComponent";
 import {connect} from "react-redux";
 import {AppStateType} from "../../redux/reduxStore";
 import {Dispatch} from "redux";
-import {WithAuthRedirectComponent} from "../../utilits/WithAuthRedirectComponent";
+import {WithAuthRedirectComponent} from "../common/Hoc/WithAuthRedirectComponent";
 
 type MapStateToProps = {
     dialogsPage:InitialStateType

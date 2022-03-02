@@ -6,7 +6,7 @@ import {authReducer, AuthReducerAction} from "./authReducer";
 import thunkMiddleware, {ThunkAction} from "redux-thunk"
 import {profileReducer, ProfileReducerAction} from "./profileReducer";
 import {FormAction, reducer as formReducer} from "redux-form";
-import {appReducer, AppReducerAction} from "./AppReducer";
+import {apReducer, AppReducerAction} from "./apReducer";
 
 
 export type ThunkType = ThunkAction<void, AppStateType, unknown, AllActionsType>
@@ -24,7 +24,7 @@ type  rootReducerType = typeof rootReducer
 export type AppStateType = ReturnType<rootReducerType> //возвращает тип стейта всего приложения
 
 let rootReducer = combineReducers({
-    app: appReducer,
+    app: apReducer,
     myProfilePage: myProfileReducer,
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
