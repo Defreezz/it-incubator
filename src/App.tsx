@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 import {Route, Routes} from "react-router-dom";
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import News from "./components/News/News";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import MyProfileContainer from "./components/MyProfile/MyProfileContainer";
 import {LoginContainer} from "./components/Login/LoginContainer";

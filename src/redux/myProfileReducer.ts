@@ -1,8 +1,7 @@
 import {v1} from "uuid";
 import {ThunkType} from "./reduxStore";
 import {profileApi} from "../api/api";
-import {Photos, ProfileAPIType, setUserProfile} from "./profileReducer";
-
+import {Photos, ProfileAPIType} from "./profileReducer";
 
 
 type SendPostType = ReturnType<typeof sendPost>
