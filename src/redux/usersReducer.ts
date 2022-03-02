@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {userApi} from "../api/api";
+import {usersApi} from "../api/api";
 import {ThunkType} from "./reduxStore";
 
 
@@ -93,7 +93,8 @@ export const setFollowInProgress = (following: boolean, userID: string) => ({
 } as const)
 //thunkCs
 export const getUsers = (currentPage: number, pageSize: number,):ThunkType => (dispatch: Dispatch) => {
-    userApi.getUsers(currentPage, pageSize)
+    dispatch(setThrobbedFetching(true))
+    usersApi.getUsers(currentPage, pageSize)
         .then(res => {
             dispatch(setThrobbedFetching(false))
             dispatch(setUsers(res.data.items))
@@ -105,14 +106,14 @@ export const getUsers = (currentPage: number, pageSize: number,):ThunkType => (d
 export const follow = (userId: string, followed: boolean):ThunkType => (dispatch:Dispatch) =>{
     if (!followed) {
         dispatch( setFollowInProgress(true, userId))
-        userApi.follow(userId)
+        usersApi.follow(userId)
             .then(response => {
                 if (response.data.resultCode === 0) dispatch( toggleFollow(userId))
                 dispatch( setFollowInProgress(false, userId))
             })
     } else {
         dispatch( setFollowInProgress(true, userId))
-        userApi.unfollow(userId)
+        usersApi.unfollow(userId)
             .then(response => {
                 if (response.data.resultCode === 0) dispatch( toggleFollow(userId))
                 dispatch( setFollowInProgress(false, userId))

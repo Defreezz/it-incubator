@@ -1,12 +1,14 @@
 import React, {DetailedHTMLProps, InputHTMLAttributes} from "react";
-import {InjectedFormProps} from "redux-form";
-import {DataFormType} from "../../Login/LoginForm";
+import {WrappedFieldMetaProps} from "redux-form";
 import s from "./FormControl.module.css"
 
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-type Input = InjectedFormProps<DataFormType> & DefaultInputPropsType
+type FormsControlType = {
+    meta: WrappedFieldMetaProps
+    input:DefaultInputPropsType
+}
 
-export const Input: React.FC<any> = ({meta, input, ...restProps}) => {
+export const Input: React.FC<FormsControlType> = ({meta, input, ...restProps}) => {
 
     const hasError = meta.touched && meta.error
     const finalClass = `${hasError ? `${s.formControl} ${s.error}` : ""}`

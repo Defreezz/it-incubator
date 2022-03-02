@@ -1,6 +1,7 @@
 import {loginApi} from "../api/api";
 import {ThunkType} from "./reduxStore";
 import {reset, stopSubmit} from "redux-form";
+import {getMyProfile, getMyStatus} from "./myProfileReducer";
 
 type SetUserDataType = ReturnType<typeof setMyProfileData>
 
@@ -26,20 +27,13 @@ const initialState: InitialStateType | null = {
 
 }
 export const authReducer = (state: InitialStateType = initialState, action: AuthReducerAction): InitialStateType => {
-
     switch (action.type) {
         case "SET-MY-PROFILE-DATA":
-            let copy = {
+           return  {
                 ...state,
                 ...action.userData,
                 isAuth: action.isAuth,
             }
-            return copy
-        // case "SET-AUTH-FETCHING":
-        //     return {
-        //         ...state,
-        //         isFetching: action.isFetching
-        //     }
         default:
             return state
     }
@@ -57,6 +51,9 @@ export const auth = (): ThunkType => (dispatch) => {
         .then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(setMyProfileData(response.data.data,true))
+                dispatch(getMyStatus(response.data.data.id))
+                dispatch(getMyProfile(response.data.data.id))
+
             }
             else {
                 dispatch(setMyProfileData(initialState,false))
@@ -64,7 +61,7 @@ export const auth = (): ThunkType => (dispatch) => {
         })
 }
 export const login = (email: string, password: string, rememberMe: boolean): ThunkType => {
-    return async (dispatch) => {
+    return async dispatch => {
         let response = await loginApi.login(email, password, rememberMe)
         if (response.data.resultCode === 0) {
             dispatch(auth())
@@ -73,7 +70,7 @@ export const login = (email: string, password: string, rememberMe: boolean): Thu
         }
     }
 }
-export const logout = (): ThunkType => async (dispatch) => {
+export const logout = (): ThunkType => async dispatch => {
     let response = await loginApi.logout()
     if (response.data.resultCode === 0) {
         dispatch(setMyProfileData(initialState,false))

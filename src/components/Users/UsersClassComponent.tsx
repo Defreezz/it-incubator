@@ -1,22 +1,41 @@
-import React from "react";
+import {Component, PureComponent} from "react";
 import {UsersComponentType} from "./UsersContainer";
 import {Users} from "./Users";
 import {Preloader} from "../common/preloader/preloader";
-import {setThrobbedFetching} from "../../redux/usersReducer";
 
 
-export class UsersClassComponent extends React.Component<UsersComponentType> {
-    componentDidMount() {
-        setThrobbedFetching(true)
+export class UsersClassComponent extends PureComponent<UsersComponentType> {
+    constructor(props:UsersComponentType) {
+        super(props);
         if (!this.props.users.length) {
             this.props.getUsers(
                 this.props.currentPage,
                 this.props.pageSize,
             )
         } else {
-            this.props.setThrobbedFetching(false)
+            this.props.getUsers(
+                1,
+                this.props.pageSize, )
+            this.props.setCurrentPage(1)
         }
     }
+
+    // componentDidMount() {
+    //     setThrobbedFetching(true)
+    //     if (!this.props.users.length) {
+    //         this.props.getUsers(
+    //             this.props.currentPage,
+    //             this.props.pageSize,
+    //         )
+    //     } else {
+    //         this.props.setThrobbedFetching(false)
+    //         this.props.getUsers(
+    //             1,
+    //             this.props.pageSize,
+    //         )
+    //         this.props.setCurrentPage(1)
+    //     }
+    // }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setThrobbedFetching(true)
@@ -29,6 +48,7 @@ export class UsersClassComponent extends React.Component<UsersComponentType> {
     }
 
     render() {
+        console.log("render")
         return (
             <>
                 {this.props.isFetching ? <Preloader/> : null}

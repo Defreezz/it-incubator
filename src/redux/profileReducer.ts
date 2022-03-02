@@ -4,21 +4,32 @@ import {profileApi} from "../api/api";
 
 type SetUserProfileType = ReturnType<typeof setUserProfile>
 type setUserStatusType = ReturnType<typeof setUserStatus>
-type setMyStatusType = ReturnType<typeof setMyStatus>
+
 
 export type ProfileReducerAction =
     | SetUserProfileType
     | setUserStatusType
-    | setMyStatusType
 
 export type Photos = {
     large: string
     small: string
 }
 export type ProfileAPIType = {
+    contacts?: {
+        "facebook": string,
+        "website": string,
+        "vk": string,
+        "twitter": string,
+        "instagram": string,
+        "youtube": string,
+        "github": string,
+        "mainLink": string
+    },
+    lookingForAJob?: boolean,
+    lookingForAJobDescription?: string,
+    userId: string
     fullName: string
     aboutMe: string
-    userId: string
     photos: Photos
     status: string
 }
@@ -42,6 +53,7 @@ const initialState: InitialStateType = {
 
 
 export const profileReducer = (state: InitialStateType = initialState, action: ProfileReducerAction): InitialStateType => {
+
     switch (action.type) {
         case "SET-USER-PROFILE":
             return {
@@ -52,11 +64,6 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
             return {
                 ...state,
                 profile: {...state.profile, status: action.status}
-            }
-        case "SET-MY-STATUS":
-            return {
-                ...state,
-                myStatus: action.status
             }
         default:
             return state
@@ -72,37 +79,21 @@ export const setUserStatus = (status: string) => {
     return {type: "SET-USER-STATUS", status} as const
 }
 
-export const setMyStatus = (status: string) => {
-    return {type: "SET-MY-STATUS", status} as const
-}
-
 //thunksC
-export const getUserProfile = (userID: string): ThunkType => (dispatch ) => {
+export const getUserProfile = (userID: string): ThunkType => dispatch => {
+    dispatch(setUserProfile(initialState.profile))
+    dispatch(getUserStatus(userID))
     profileApi.getUserProfile(userID)
         .then(response =>
             dispatch(setUserProfile(response))
         )
-    dispatch(getUserStatus(userID))
 }
 
-const getUserStatus = (userID: string): ThunkType => (dispatch ) => {
+const getUserStatus = (userID: string): ThunkType => dispatch => {
     profileApi.getStatus(userID)
         .then(response =>
             dispatch(setUserStatus(response.data))
         )
 }
-export const getMyStatus = (userID: string): ThunkType => (dispatch ) => {
-    profileApi.getStatus(userID)
-        .then(response =>
-            dispatch(setMyStatus(response.data))
-        )
-}
-export const updateStatus = (status: string): ThunkType => (dispatch ) => {
-    profileApi.updateStatus(status)
-        .then(response => {
-                if (response.data.resultCode === 0)
-                    dispatch(setMyStatus(status))
-            }
-        )
-}
+
 

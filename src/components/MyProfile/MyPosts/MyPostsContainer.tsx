@@ -3,8 +3,6 @@ import React from "react";
 import {sendPost} from "../../../redux/myProfileReducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
-import {reset} from "redux-form";
 import {resetForm} from "../../../redux/authReducer";
 
 export type PostType = {

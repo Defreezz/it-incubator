@@ -27,10 +27,10 @@ const mapStateToProps = (state:AppStateType):InitialStateType => {
 // const mapDispatchToProps = ():MapDispatchToProps => {
 //   return
 // }
-export const HeaderContainer = connect(mapStateToProps,{
+ const HeaderContainer = connect(mapStateToProps,{
     logout,
 })(HeaderClassComponent)
 
-
+export default HeaderContainer
 
 

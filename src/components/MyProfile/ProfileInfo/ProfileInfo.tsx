@@ -1,29 +1,41 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import style from "./ProfileInfo.module.css"
-import {ProfileStatus} from "./ProfileStatus";
+import {EditableSpan} from "./EditableSpan";
+import {ProfileAPIType} from "../../../redux/profileReducer";
+import {MyProfileType} from "../../../redux/myProfileReducer";
 
 type ProfileInfoType = {
-    id: string
-    updateStatus: (status: string) => void
+    updateMyProfile: (updateModel: ProfileAPIType) => void,
+    updateMyStatus: (status: string) => void
     status: string
+    savePhoto: (file: File, userID: string) => void
+    myProfile:MyProfileType
 }
 
 class ProfileInfo extends React.Component<ProfileInfoType> {
 
-    render() {
-        const profileInfoData = {
-            img1: "https://img.uslugio.com/img3/33/3d/333d332bafec42151557d5c1a8a2d10c.jpg",
-            img2: "https://s.mediasole.ru/cache/content/data/images/1486/1486067/original.jpg"
+    handlerChangePhoto(e: ChangeEvent<HTMLInputElement>) {
+
+        if (e.target.files && e.target.files.length) {
+            this.props.savePhoto(e.target.files[0], this.props.myProfile.userId)
+
         }
+    }
+    handlerChangeAboutMeArea(value:string){
+        this.props.updateMyProfile({...this.props.myProfile,aboutMe:value})
+    }
+
+    render() {
+        let {status, updateMyStatus,myProfile } = this.props
         return (
             <div>
-
-                <div>
-                    <img className={style.topImg} src={profileInfoData.img1}></img>
-                </div>
                 <div className={style.descriptionBox}>
-                    <img className={style.ava} src={profileInfoData.img2}></img>
-                    <ProfileStatus updateStatus={this.props.updateStatus} status={this.props.status}/>
+                    <div>
+                        <img alt={"avatar"} src={myProfile.photos.large} className={style.ava}/>
+                    </div>
+                    <input onChange={this.handlerChangePhoto.bind(this)} type={"file"}/>
+                    <EditableSpan name={"Status"} onChange={updateMyStatus} value={status}/>
+                    <EditableSpan name={"About me"} onChange={this.handlerChangeAboutMeArea.bind(this)} value={myProfile.aboutMe}/>
                 </div>
             </div>
         )
